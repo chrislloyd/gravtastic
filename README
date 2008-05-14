@@ -1,13 +1,25 @@
 Gravtastic
 ==========
 
-Introduction goes here.
+Easily add Gravatars to your application!
 
 
 Example
 =======
 
-Example goes here.
+This goes in your model:
+
+  class User < ActiveRecord::Base
+    acts_as_gravatar_id :email
+  end
+
+This goes in your view
+
+  = image_tag current_user.gravatar
+  
+and your done! If you want to customize the gravatar, just pass it some extra options:
+
+  = image_tag current_user.gravatar(:width => 80, :height => 80)
 
 
-Copyright (c) 2008 [name of plugin creator], released under the MIT license
+Copyright (c) 2008 Chris Lloyd, released under the MIT license
