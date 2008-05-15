@@ -8,7 +8,7 @@ h2. Install
 
 h2. Example
 
-Somewhere in your application you need to +require 'gravtastic'+. In Rails 2.1 can forego this and just add a dependency gem dependency for Gravtastic.
+Somewhere in your application you need to @require 'gravtastic'@. In Rails 2.1 can forego this and just add a dependency gem dependency for Gravtastic.
 
   Rails::Initializer.run do |config|
     config.gem 'chrislloyd-gravtastic', :lib => 'gravtastic', :source => 'http://gems.github.com/'
@@ -20,7 +20,7 @@ The next step is to make your class (or model in Rails) have a Gravatar.
     has_gravatar
   end
   
-This defaults to looking for the gravatar ID on the +email+ method. So, if your +User+ has an +email+ then it will send that to Gravatar to get their picture. You can change the default gravatar source like this:
+This defaults to looking for the gravatar ID on the @email@ method. So, if your @User@ has an @email@ then it will send that to Gravatar to get their picture. You can change the default gravatar source like this:
 
   has_gravatar :on => :author_email
 
