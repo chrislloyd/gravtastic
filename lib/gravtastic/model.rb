@@ -9,9 +9,8 @@ module Gravtastic
     
     module ClassMethods
       
-      def has_gravatar(options={:on=>:email})
+      def has_gravatar(options={:on => :email})
         @gravatar_source = options[:on]
-        self.send(:include, InstanceMethods)
       end
       
       def gravatar_source
@@ -21,14 +20,13 @@ module Gravtastic
     end
     
     def has_gravatar?
+      !!self.class.gravatar_source
     end
     
-    module InstanceMethods
-      
-      def gravatar_id
-        Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s)
+    def gravatar_id
+      if value = send(self.class.gravatar_source)
+        Digest::MD5.hexdigest(value.to_s)
       end
-      
     end
     
   end
