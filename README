@@ -1,4 +1,4 @@
-Easily add "Gravatars":http://gravatar.com to your Ruby object.
+Easily add "Gravatars":http://gravatar.com to your Ruby objects.
 
 
 h2. Install
@@ -10,13 +10,12 @@ h2. Usage
 
 Somewhere in your application you need to @require 'gravtastic'@. In Rails >= 2.1 you can forego this and just add a dependency gem dependency for Gravtastic.
 
-  Rails::Initializer.run do |config|
-    config.gem 'chrislloyd-gravtastic', :lib => 'gravtastic', :source => 'http://gems.github.com/'
-  end
+    config.gem 'gravtastic', :source => 'http://gems.github.com/'
 
 The next step is to give your class (or model in Rails) a Gravatar:
 
   class User
+    include Gravtastic::Model
     has_gravatar
   end
   
@@ -24,11 +23,33 @@ This defaults to looking for the gravatar ID on the @email@ method. So, if your 
 
   has_gravatar :on => :author_email
 
-Now your gravatar source is all set up! If you are working with Rails you can now use some of Gravtastic's handy helpers to display the image in your views.
+Now, you can access your object's gravatar with the @gravatar_url@ method:
 
-  = gravatar_image current_user
-  = gravatar_image current_user, :options => { :width => 80, :height => 80 }
-  = gravatar_path current_user # => http://www.gravatar.com/avatar/08f077ea061585744ee080824f5a8e65
+  >> current_user.gravatar_url
+  => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e"
+
+and you can specify extra options with a hash:
+
+  >> a.gravatar_url(:rating => 'PG', :size => 512)
+  => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?rating=PG&size=512"
+
+PS.  Bonus points for anybody who can tell me what that users email is!
+PPS. Shame on Auttomatic for still using MD5!
+
+
+h2. The Future
+
+It isn't auto-included in ActiveRecord and Datamapper classes. When I fix this it means that you won't have to do the whole @include Gravtastic::Model@ thing for your models. You'll still, however, have to do that for standard Ruby classes.
+
+Also, I want to add a set of default options to the class so that you don't have to do add @:rating => 'PG'@ to every Gravatar you use.
+
+And lastly, the RDoc sucks, so that needs to be included.
+
+
+h2. Authors
+
+* "Chris Lloyd":http://chrislloyd.com.au
+* You
 
 
 h2. Contribute

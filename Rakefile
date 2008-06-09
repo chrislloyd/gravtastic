@@ -9,7 +9,7 @@ GEM_VERSION = "1.0.0"
 AUTHOR = "Chris Lloyd"
 EMAIL = "christopher.lloyd@gmail.com"
 HOMEPAGE = "http://github.com/chrislloyd/gravtastic"
-SUMMARY = "A gem that provides..."
+SUMMARY = "Easily add Gravatars to your Ruby objects."
 
 spec = Gem::Specification.new do |s|
   s.name = GEM
@@ -27,7 +27,6 @@ spec = Gem::Specification.new do |s|
   # s.add_dependency "foo"
   
   s.require_path = 'lib'
-  s.autorequire = GEM
   s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec}/**/*")
 end
 

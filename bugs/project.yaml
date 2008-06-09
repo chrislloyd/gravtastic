@@ -27,3 +27,12 @@ releases:
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - created
     - Feature complete initial release.
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.1.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-06-09 06:58:33.486213 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - ""
