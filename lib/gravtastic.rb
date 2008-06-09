@@ -2,6 +2,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
 require 'digest/md5'
+require 'cgi'
 
 module Gravtastic
   module Model
@@ -42,7 +43,8 @@ module Gravtastic
 
     def parse_url_options_hash(options)
       unless options.empty?
-        '?' + options.to_a.map{|pair| pair.join('=')}.join('&')
+        # What a 1 liner!
+        '?' + options.to_a.map{|pair| pair.map{|item| item = CGI::escape(item.to_s) }.join('=') }.join('&')
       else
         ''
       end
