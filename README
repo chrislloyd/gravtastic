@@ -1,4 +1,69 @@
-gravtastic
-==========
+Easily add "Gravatars":http://gravatar.com to your Ruby object.
 
-A gem that provides...
+
+h2. Install
+
+  sudo gem install chrislloyd-gravtastic --source=http://gems.github.com
+
+
+h2. Usage
+
+Somewhere in your application you need to @require 'gravtastic'@. In Rails >= 2.1 you can forego this and just add a dependency gem dependency for Gravtastic.
+
+  Rails::Initializer.run do |config|
+    config.gem 'chrislloyd-gravtastic', :lib => 'gravtastic', :source => 'http://gems.github.com/'
+  end
+
+The next step is to give your class (or model in Rails) a Gravatar:
+
+  class User
+    has_gravatar
+  end
+  
+This defaults to looking for the gravatar ID on the @email@ method. So, if your @User@ has an @email@ then it will send that to Gravatar to get their picture. You can change the default gravatar source like this:
+
+  has_gravatar :on => :author_email
+
+Now your gravatar source is all set up! If you are working with Rails you can now use some of Gravtastic's handy helpers to display the image in your views.
+
+  = gravatar_image current_user
+  = gravatar_image current_user, :options => { :width => 80, :height => 80 }
+  = gravatar_path current_user # => http://www.gravatar.com/avatar/08f077ea061585744ee080824f5a8e65
+
+
+h2. Contribute
+
+You can checkout the source or fork it yourself from Github.
+
+  git clone git://github.com/chrislloyd/gravtastic.git
+
+If you submit a successful patch then you'll be given full commit rights to the project.
+
+
+h2. Thanks
+
+* "Xavier Shay":http://rhnh.net and others for "Enki":http://enkiblog.com (the reason this was written)
+
+
+h2. License
+
+Copyright (c) 2008 Chris Lloyd.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
