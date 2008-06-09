@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper.rb'
 require 'erb'
-require 'active_support'
+# require 'active_support'
 
 include Gravtastic::Helpers, ERB::Util
 

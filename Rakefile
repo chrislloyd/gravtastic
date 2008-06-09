@@ -28,7 +28,7 @@ spec = Gem::Specification.new do |s|
   
   s.require_path = 'lib'
   s.autorequire = GEM
-  s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,specs}/**/*")
+  s.files = %w(LICENSE README Rakefile) + Dir.glob("{lib,spec}/**/*")
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
@@ -40,6 +40,7 @@ task :specs => :spec
 
 desc "Run all examples"
 Spec::Rake::SpecTask.new('spec') do |t|
+  t.spec_opts = ['--color']
   t.spec_files = FileList['spec/**/*.rb']
 end
 
