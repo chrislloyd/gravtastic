@@ -1,0 +1,29 @@
+--- !ditz.rubyforge.org,2008-03-06/project 
+name: Gravtastic
+version: "0.2"
+components: 
+- !ditz.rubyforge.org,2008-03-06/component 
+  name: Gravtastic
+releases: 
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.0.0
+  status: :released
+  release_time: 2008-06-09 00:37:24.900782 Z
+  log_events: 
+  - - 2008-06-09 00:37:13.067055 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - Incomplete first release.
+  - - 2008-06-09 00:37:24.900806 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
+    - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.5.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-06-09 00:38:37.051970 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - Feature complete initial release.
