@@ -55,3 +55,7 @@ task :make_spec do
     file.puts spec.to_ruby
   end
 end
+
+task :bugs do
+  sh %{ditz html ; open html/index.html}
+end
