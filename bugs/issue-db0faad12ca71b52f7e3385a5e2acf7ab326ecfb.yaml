@@ -1,0 +1,30 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Options do not generate correct URLs.
+desc: When passed options such as rating or size, they do not create correct urls.
+type: :bugfix
+component: Gravtastic
+release: 1.1.1
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-10 02:41:50.099977 Z
+references: []
+
+id: db0faad12ca71b52f7e3385a5e2acf7ab326ecfb
+log_events: 
+- - 2008-06-10 02:41:51.548202 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-10 02:43:45.405479 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - assigned to release 1.1.1 from unassigned
+  - ""
+- - 2008-06-10 02:44:16.669770 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - changed status from unstarted to in_progress
+  - Easily fixed.
+- - 2008-06-10 04:23:01.186490 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed issue with disposition fixed
+  - ""

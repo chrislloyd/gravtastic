@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: There should be default options.
+desc: There should be default options so that ":rating => 'PG'" doesn't have to be typed every time.
+type: :feature
+component: Gravtastic
+release: 1.1.1
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-10 04:22:12.409496 Z
+references: []
+
+id: 09742abad23b49eb767e766905d1bd532ba2a1c5
+log_events: 
+- - 2008-06-10 04:22:14.169961 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-10 04:22:36.427986 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2008-06-10 04:23:05.954525 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed issue with disposition fixed
+  - ""

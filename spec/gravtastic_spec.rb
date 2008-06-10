@@ -1,85 +1,87 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require 'digest/md5'
 
 describe "Gravtastic::Model" do
 
   before(:each) do
     @user = mock('User')
     @user.class.send(:include, Gravtastic::Model)
+    @klass = @user.class
   end
 
-  describe "class" do
-
-    before(:each) do
-      @klass = @user.class
+  describe ".gravatar_source" do
+    
+    it "is nil if unset" do
+      @klass.gravatar_source.should be_nil
     end
-
-    it "doesn't have a gravatar source if it hasn't been set" do
-      @klass.gravatar_source.should == nil
-    end
-
-    it "sets the gravatar source to email by default" do
+  
+  end
+  
+  describe ".has_gravatar" do
+    
+    it "sets .gravatar_source to email by default" do
       @klass.has_gravatar
       @klass.gravatar_source.should == :email
     end
-
-    it "sets the gravatar source to the value of :on supplied" do
+    
+    it "changes .gravatar_source" do
+      lambda {
+        @klass.has_gravatar :on => :other_method
+      }.should change(@klass, :gravatar_source)
+    end
+    
+    it "sets .gravatar_source to the value of :on" do
       @klass.has_gravatar :on => :other_method
       @klass.gravatar_source.should == :other_method
     end
-
+    
   end
 
+  describe ".has_gravatar?" do
+    
+    it "is true when .gravatar_source is not nil" do
+      @user.class.stub!(:gravatar_source).and_return(:email)
+      @user.class.should have_gravatar
+    end
+    
+    it "is false when .gravatar_soruce is not is nil" do
+      @user.class.stub!(:gravatar_source).and_return(nil)
+      @user.class.should_not have_gravatar
+    end
+    
+  end
 
-  describe "instance with a set gravatar" do
+  describe "#gravatar_id" do
 
     before(:each) do
       @user.stub!(:email).and_return('joe@example.com')
       @user.stub!(:name).and_return('Joe Bloggs')
-      @user.class.has_gravatar
+      @user.class.stub!(:gravatar_source).and_return(:email)
     end
     
-    it "has a gravatar" do
-      @user.class.should have_gravatar
-    end
-
-    it "returns a gravatar_id if the Gravatar source is set" do
+    it "is not nil when .gravatar_source is not nil" do
       @user.gravatar_id.should_not be_nil
     end
+    
+    it "is nil when .gravatar_source is nil" do
+      @user.class.stub!(:gravatar_source).and_return(nil)
+      @user.gravatar_id.should be_nil
+    end
 
-    it "changes the gravatar_id when the Gravatar source is changed" do
+    it "changes when .gravatar_source is changed" do
       lambda {
-        @user.class.has_gravatar :on => :name
+        @user.class.stub!(:gravatar_source).and_return(:name)
       }.should change(@user, :gravatar_id)
     end
 
-    it "returns a hash" do
-      @user.gravatar_id.should == Digest::MD5.hexdigest('joe@example.com')
+    it "is a MD5 hash" do
+      @user.gravatar_id.should == 'f5b8fb60c6116331da07c65b96a8a1d1'
     end
     
-    it "has a gravatar_url" do
-      @user.gravatar_url.should_not be_nil
-    end
-
-  end
-  
-  describe "instance without a set gravatar" do
-    
-    before(:each) do
-      @user.class.has_gravatar :on => nil
+    it "downcases any imput" do
+      @user.stub!(:email).and_return('JOE@EXAMPLE.COM')
+      @user.gravatar_id.should == 'f5b8fb60c6116331da07c65b96a8a1d1'
     end
     
-    it "doesn't have a gravatar" do
-      @user.class.should_not have_gravatar
-    end
-    
-    it "doesn't have a gravatar_id" do
-      @user.gravatar_id.should be_nil
-    end
-    
-    it "doesn't have a gravatar_url" do
-      @user.gravatar_url.should be_nil
-    end
   end
   
   describe "#gravatar_url" do
@@ -87,27 +89,60 @@ describe "Gravtastic::Model" do
     before(:each) do
       @user.stub!(:email).and_return('joe@example.com')
       @user.stub!(:name).and_return('Joe Bloggs')
-      @user.class.has_gravatar
+      @user.class.stub!(:gravatar_source).and_return(:email)
     end
     
-    it "is not nil when gravatar_id is set" do
+    it "is not nil when .gravatar_source is not nil" do
       @user.gravatar_url.should_not be_nil
     end
     
-    it "returns a valid URL" do
-      @user.gravatar_url.should == 'http://www.gravatar.com/f5b8fb60c6116331da07c65b96a8a1d1'
+    it "is nil when .gravatar_source is nil" do
+      @user.class.stub!(:gravatar_source).and_return(nil)
+      @user.gravatar_url.should be_nil
     end
     
-    it "returns a valid URL with a width" do
-      @user.gravatar_url(:width => 512).should == 'http://www.gravatar.com/f5b8fb60c6116331da07c65b96a8a1d1?width=512'
+    it "always specifies the resource type" do
+      @user.gravatar_url.should match(/.jpg/)
     end
     
-    it "returns a valid URL with a height" do
-      @user.gravatar_url(:height => 512).should == 'http://www.gravatar.com/f5b8fb60c6116331da07c65b96a8a1d1?height=512'
+    it "returns a valid gravatar URL" do
+      @user.gravatar_url.should == valid_gravatar_url + '?r=PG'
     end
     
-    it "returns a valid URL with a width and a height" do
-      @user.gravatar_url(:width => 800, :height => 600).should == 'http://www.gravatar.com/f5b8fb60c6116331da07c65b96a8a1d1?width=800&height=600'
+    it "returns a valid gravatar URL even when invalid option is passed" do
+      @user.gravatar_url(:foo => :bar).should == valid_gravatar_url + '?r=PG'
+    end
+    
+    it "parses a size" do 
+      @user.gravatar_url(:size => 512).should == valid_gravatar_url + '?s=512&r=PG'
+    end
+    
+    it "parses a rating" do 
+      @user.gravatar_url(:rating => 'MA').should == valid_gravatar_url + '?r=MA'
+    end
+    
+    it "returns a valid gravatar URL when the rating option is unescaped" do
+      @user.gravatar_url(:rating => 'Unescaped String').should == valid_gravatar_url + '?r=Unescaped+String'
+    end
+    
+    it "parses a default image type" do 
+      @user.gravatar_url(:default => :identicon).should == valid_gravatar_url + '?d=identicon&r=PG'
+    end
+    
+    it "parses a default image URL" do 
+      @user.gravatar_url(:default => 'http://example.com/images/example.jpg').should == valid_gravatar_url + '?d=http%3A%2F%2Fexample.com%2Fimages%2Fexample.jpg&r=PG'
+    end
+    
+    it "parses multiple options" do
+      @user.gravatar_url(:size => 20, :rating => 'R18', :default => :monsterid).should == valid_gravatar_url + '?d=monsterid&s=20&r=R18'
+    end
+    
+    it "defaults to a 'PG' rating" do
+      @user.gravatar_url(:rating => 'PG').should == @user.gravatar_url
+    end
+    
+    def valid_gravatar_url
+      'http://www.gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.jpg'
     end
     
   end

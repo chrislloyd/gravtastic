@@ -40,3 +40,12 @@ releases:
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - released
     - Nice, all working!
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.1.1
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-06-10 02:43:07.117035 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - Fixes URL problems.
