@@ -52,7 +52,7 @@ module Gravtastic
         '?' + options.map do |pair|
           pair[0] = pair[0].to_s[0,1] # Get the first character of the option
           pair.map{|item| item = CGI::escape(item.to_s) }.join('=') # Join key & value together
-        end.join('&') # Join options together
+        end.sort.join('&') # Join options together
       else
         ''
       end

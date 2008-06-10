@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Spec failures for Gravtastic::Model#gravatar_url
+desc: The ordering of the params sometimes causes spec errors. It needs to be defined.
+type: :bugfix
+component: Gravtastic
+release: 1.1.2
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-10 12:35:44.485608 Z
+references: []
+
+id: 73e515a7e0a68ba0e284d36b0342f46cda88c1ba
+log_events: 
+- - 2008-06-10 12:35:45.741808 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-10 12:41:44.913679 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - assigned to release 1.1.2 from unassigned
+  - ""
+- - 2008-06-10 12:42:24.074042 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed issue with disposition fixed
+  - ""

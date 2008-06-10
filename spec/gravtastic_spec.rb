@@ -114,7 +114,7 @@ describe "Gravtastic::Model" do
     end
     
     it "parses a size" do 
-      @user.gravatar_url(:size => 512).should == valid_gravatar_url + '?s=512&r=PG'
+      @user.gravatar_url(:size => 512).should == valid_gravatar_url + '?r=PG&s=512'
     end
     
     it "parses a rating" do 
@@ -134,7 +134,7 @@ describe "Gravtastic::Model" do
     end
     
     it "parses multiple options" do
-      @user.gravatar_url(:size => 20, :rating => 'R18', :default => :monsterid).should == valid_gravatar_url + '?d=monsterid&s=20&r=R18'
+      @user.gravatar_url(:size => 20, :rating => 'R18', :default => :monsterid).should == valid_gravatar_url + '?d=monsterid&r=R18&s=20'
     end
     
     it "defaults to a 'PG' rating" do
