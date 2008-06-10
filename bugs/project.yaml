@@ -42,10 +42,16 @@ releases:
     - Nice, all working!
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 1.1.1
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-06-10 04:27:05.332869 Z
   log_events: 
   - - 2008-06-10 02:43:07.117035 Z
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - created
     - Fixes URL problems.
+  - - 2008-06-10 04:27:05.332882 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
+    - |-
+      Nice, fully working publicly available gem! Sweet.
+      Gravtastic now matches all the specs on http://en.gravatar.com/site/implement/url
