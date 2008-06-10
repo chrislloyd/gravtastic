@@ -57,10 +57,14 @@ releases:
       Gravtastic now matches all the specs on http://en.gravatar.com/site/implement/url
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 1.1.2
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-06-10 12:43:45.036425 Z
   log_events: 
   - - 2008-06-10 12:35:55.678243 Z
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - created
+    - ""
+  - - 2008-06-10 12:43:45.036438 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
     - ""

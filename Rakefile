@@ -5,7 +5,7 @@ require 'spec/rake/spectask'
 require 'date'
 
 GEM = "gravtastic"
-GEM_VERSION = "1.1.1"
+GEM_VERSION = "1.1.2"
 AUTHOR = "Chris Lloyd"
 EMAIL = "christopher.lloyd@gmail.com"
 HOMEPAGE = "http://github.com/chrislloyd/gravtastic"
