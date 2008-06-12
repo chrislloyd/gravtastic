@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Add proper RDoc documentation.
+desc: There is no RDoc documentation.
+type: :feature
+component: Gravtastic
+release: 1.5.0
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :in_progress
+disposition: 
+creation_time: 2008-06-10 12:47:22.684556 Z
+references: []
+
+id: 60e14bb835fe61566d2d927b174de91a7f97d715
+log_events: 
+- - 2008-06-10 12:47:23.924990 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-10 12:58:12.077722 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - changed status from unstarted to in_progress
+  - ""

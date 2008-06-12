@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Automagically include in ActiveRecord.
+desc: When required as a Gem dependency in Rails, automagically be included in Rails Models.
+type: :feature
+component: Gravtastic
+release: 1.5.0
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :in_progress
+disposition: 
+creation_time: 2008-06-12 00:16:04.640387 Z
+references: []
+
+id: 39469fee8104a8a4683e182b2d6c81e41cc0bc4d
+log_events: 
+- - 2008-06-12 00:16:06.680706 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-12 00:17:44.347453 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - changed status from unstarted to in_progress
+  - ""
