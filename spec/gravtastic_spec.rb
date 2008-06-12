@@ -7,7 +7,7 @@ describe "Gravtastic::Model" do
     @user.class.send(:include, Gravtastic::Model)
     @klass = @user.class
   end
-
+  
   describe ".gravatar_source" do
     
     it "is nil if unset" do
@@ -141,7 +141,7 @@ describe "Gravtastic::Model" do
       @user.gravatar_url(:rating => 'PG').should == @user.gravatar_url
     end
     
-    def valid_gravatar_url
+    def valid_gravatar_url # :nodoc:
       'http://www.gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.jpg'
     end
     

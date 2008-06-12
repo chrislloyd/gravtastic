@@ -5,8 +5,8 @@ type: :feature
 component: Gravtastic
 release: 1.5.0
 reporter: Chris Lloyd <christopher.lloyd@gmail.com>
-status: :in_progress
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-06-10 12:47:22.684556 Z
 references: []
 
@@ -20,3 +20,7 @@ log_events:
   - Chris Lloyd <christopher.lloyd@gmail.com>
   - changed status from unstarted to in_progress
   - ""
+- - 2008-06-12 00:56:00.850768 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed issue with disposition fixed
+  - Done!
