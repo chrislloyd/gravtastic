@@ -61,4 +61,4 @@ module Gravtastic
   end
 end
 
-# ActiveRecord::Base.send(:extend, )
+ActiveRecord::Base.send(:include, Gravtastic::Model) if defined?(ActiveRecord)
