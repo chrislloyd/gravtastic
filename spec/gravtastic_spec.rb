@@ -101,8 +101,8 @@ describe "Gravtastic::Model" do
       @user.gravatar_url.should be_nil
     end
     
-    it "always specifies the resource type" do
-      @user.gravatar_url.should match(/.jpg/)
+    it "always specifies a png resource type" do
+      @user.gravatar_url.should match(/.png/)
     end
     
     it "returns a valid gravatar URL" do
@@ -142,7 +142,7 @@ describe "Gravtastic::Model" do
     end
     
     def valid_gravatar_url # :nodoc:
-      'http://www.gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.jpg'
+      'http://www.gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.png'
     end
     
   end

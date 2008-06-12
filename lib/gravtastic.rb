@@ -102,7 +102,7 @@ module Gravtastic
     def gravatar_url(options={})
       options[:rating] ||= 'PG'
       if gravatar_id
-        @gravatar_url = 'http://www.gravatar.com/avatar/' + gravatar_id + '.jpg' + parse_url_options_hash(options)
+        @gravatar_url = 'http://www.gravatar.com/avatar/' + gravatar_id + '.png' + parse_url_options_hash(options)
       end
     end
 
