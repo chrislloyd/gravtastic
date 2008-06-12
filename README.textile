@@ -27,15 +27,18 @@ This defaults to looking for the gravatar ID on the @email@ method. So, if your 
 Now, you can access your object's gravatar with the @gravatar_url@ method:
 
   current_user.gravatar_url
-  => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?r=PG"
+  => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
 
 Note that it defaults to a PG rating. You can specify extra options with a hash:
 
   current_user.gravatar_url(:rating => 'R18', :size => 512)
-  => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?r=PG&s=512"
+  => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG&s=512"
+  
+  current_user.gravatar_url(:secure => true)
+  => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
 
 PS.  Bonus points for anybody who can tell me what that users email is!
-PPS. Shame on Auttomatic for still using MD5!
+PPS. Shame on Automattic for still using MD5!
 
 
 h2. The Future

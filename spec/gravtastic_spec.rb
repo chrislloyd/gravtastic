@@ -109,6 +109,14 @@ describe "Gravtastic::Model" do
       @user.gravatar_url.should == valid_gravatar_url + '?r=PG'
     end
     
+    it "returns a valid SSL gravatar URL" do
+      @user.gravatar_url(:secure => true).should == 'https://secure.gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.png?r=PG'
+    end
+    
+    it "returns a url without the 'www'" do
+      @user.gravatar_url.should_not match(/www/)
+    end
+    
     it "returns a valid gravatar URL even when invalid option is passed" do
       @user.gravatar_url(:foo => :bar).should == valid_gravatar_url + '?r=PG'
     end
@@ -142,7 +150,7 @@ describe "Gravtastic::Model" do
     end
     
     def valid_gravatar_url # :nodoc:
-      'http://www.gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.png'
+      'http://gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.png'
     end
     
   end

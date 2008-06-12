@@ -29,12 +29,15 @@ require 'cgi'
 # Now, you can access your object's gravatar with the <tt>gravatar_url</tt> method:
 # 
 #   current_user.gravatar_url
-#   => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?r=PG"
+#   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
 # 
 # Note that it defaults to a PG rating. You can specify extra options with a hash:
 # 
 #   current_user.gravatar_url(:rating => 'R18', :size => 512)
-#   => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?r=PG&s=512"
+#   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG&s=512"
+# 
+#   current_user.gravatar_url(:secure => true)
+#   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
 # 
 module Gravtastic
   module Model
@@ -94,15 +97,19 @@ module Gravtastic
     # Examples:
     # 
     #   current_user.gravatar_url
-    #   => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?r=PG"
+    #   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
     # 
     #   current_user.gravatar_url(:rating => 'R18', :size => 512, :default => 'http://example.com/images/example.jpg')
-    #   => "http://www.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e?d=http%3A%2F%2Fexample.com%2Fimages%2Fexample.jpg&r=R18&s=512"
-    #
+    #   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?d=http%3A%2F%2Fexample.com%2Fimages%2Fexample.jpg&r=R18&s=512"
+    # 
+    #   current_user.gravatar_url(:secure => true)
+    #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
+    # 
     def gravatar_url(options={})
       options[:rating] ||= 'PG'
+      options[:secure] ||= false
       if gravatar_id
-        @gravatar_url = 'http://www.gravatar.com/avatar/' + gravatar_id + '.png' + parse_url_options_hash(options)
+        @gravatar_url = 'http' + (options[:secure] ? 's://secure.' : '://') + 'gravatar.com/avatar/' + gravatar_id + '.png' + parse_url_options_hash(options)
       end
     end
 

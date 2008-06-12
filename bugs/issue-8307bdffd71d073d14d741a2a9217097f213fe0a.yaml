@@ -1,0 +1,28 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Support for secure gravatars needed.
+desc: |-
+  Gravatars can be accessed over SSL and this option needs to be supported.
+  https://secure.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60
+type: :feature
+component: Gravtastic
+release: 1.5.1
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-12 03:39:57.095291 Z
+references: []
+
+id: 8307bdffd71d073d14d741a2a9217097f213fe0a
+log_events: 
+- - 2008-06-12 03:39:58.191636 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-12 03:44:03.275989 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2008-06-12 03:55:18.346276 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed issue with disposition fixed
+  - ""
