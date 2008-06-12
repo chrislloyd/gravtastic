@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{gravtastic}
-  s.version = "1.5.0"
+  s.version = "1.5.1"
 
   s.specification_version = 2 if s.respond_to? :specification_version=
 
