@@ -20,13 +20,17 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 1.5.0
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-06-12 00:59:34.157075 Z
   log_events: 
   - - 2008-06-09 00:38:37.051970 Z
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - created
     - Feature complete initial release.
+  - - 2008-06-12 00:59:34.157089 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
+    - Working nicely now!
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 1.1.0
   status: :released

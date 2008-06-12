@@ -40,9 +40,7 @@ PPS. Shame on Auttomatic for still using MD5!
 
 h2. The Future
 
-It isn't auto-included in ActiveRecord and Datamapper classes. When I fix this it means that you won't have to do the whole @include Gravtastic::Model@ thing for your models. You'll still, however, have to do that for standard Ruby classes.
-
-And lastly, the RDoc sucks, so that needs to be included.
+* "Datamapper":http://datamaper.org support
 
 
 h2. Authors
