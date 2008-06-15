@@ -15,6 +15,7 @@ spec = Gem::Specification.new do |s|
   s.name = GEM
   s.version = GEM_VERSION
   s.platform = Gem::Platform::RUBY
+  s.rubyforge_project = GEM
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.textile', 'LICENSE']
   s.summary = SUMMARY

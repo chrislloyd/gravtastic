@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chris Lloyd"]
-  s.date = %q{2008-06-12}
+  s.date = %q{2008-06-15}
   s.description = %q{Easily add Gravatars to your Ruby objects.}
   s.email = %q{christopher.lloyd@gmail.com}
   s.extra_rdoc_files = ["README.textile", "LICENSE"]
@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.homepage = %q{http://github.com/chrislloyd/gravtastic}
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{gravtastic}
   s.rubygems_version = %q{1.1.1}
   s.summary = %q{Easily add Gravatars to your Ruby objects.}
 end
