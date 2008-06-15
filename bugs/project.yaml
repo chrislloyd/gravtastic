@@ -85,3 +85,16 @@ releases:
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.5.2
+  status: :released
+  release_time: 2008-06-15 01:44:37.017840 Z
+  log_events: 
+  - - 2008-06-15 01:44:25.681341 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - Now with Rubyforge support!
+  - - 2008-06-15 01:44:37.017854 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
+    - Accepted!
