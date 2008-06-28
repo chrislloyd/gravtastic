@@ -3,14 +3,14 @@ Easily add "Gravatars":http://gravatar.com to your Ruby objects.
 
 h2. Install
 
-  sudo gem install chrislloyd-gravtastic --source=http://gems.github.com
+  sudo gem install gravtastic
 
 
 h2. Usage
 
 Somewhere in your application you need to @require 'gravtastic'@. In Rails >= 2.1 you can forego this and just add a dependency gem dependency for Gravtastic.
 
-    config.gem 'gravtastic', :source => 'http://gems.github.com/'
+    config.gem 'gravtastic'
 
 The next step is to give your model a Gravatar:
 
@@ -36,14 +36,14 @@ Note that it defaults to a PG rating. You can specify extra options with a hash:
   
   current_user.gravatar_url(:secure => true)
   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
+  
+However, to DRY things up you can specify defaults in the class declaration.
+
+  has_gravatar :author_email, :defaults => { :rating => 'R18', :size => 20 }
+
+Nice, now all the calls to gravatar_url will have the defaults you have specified.
 
 PS.  Bonus points for anybody who can tell me what that users email is!
-PPS. Shame on Automattic for still using MD5!
-
-
-h2. The Future
-
-* "Datamapper":http://datamaper.org support
 
 
 h2. Authors
@@ -64,6 +64,7 @@ If you submit a successful patch then you'll be given full commit rights to the 
 h2. Thanks
 
 * "Xavier Shay":http://rhnh.net and others for "Enki":http://enkiblog.com (the reason this was written)
+* "Matthew Moore":http://www.matthewpaulmoore.com/ for helpful suggestions
 
 
 h2. License
