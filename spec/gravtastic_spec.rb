@@ -13,14 +13,42 @@ describe "Gravtastic::Model" do
     it "is nil if unset" do
       @klass.gravatar_source.should be_nil
     end
+    
+    it "returns the value of @gravatar_source" do
+      @klass.instance_variable_set('@gravatar_source', :foo)
+      @klass.gravatar_source.should == :foo
+    end
   
+  end
+  
+  describe ".gravatar_defaults" do
+    
+    it "it nil if unset" do
+      @klass.gravatar_defaults.should be_nil
+    end
+    
+    it "returns the value of @gravatar_defaults" do
+      @klass.instance_variable_set('@gravatar_defaults', :foo)
+      @klass.gravatar_source.should == :foo
+    end
+    
   end
   
   describe ".has_gravatar" do
     
-    it "sets .gravatar_source to email by default" do
+    it "sets .gravatar_source to :email by default" do
       @klass.has_gravatar
       @klass.gravatar_source.should == :email
+    end
+    
+    it "sets .gravatar_defaults to { :rating => 'PG', :secure => false } by default" do
+      @klass.has_gravatar
+      @klass.gravatar_defaults.should == { :rating => 'PG', :secure => false }
+    end
+    
+    it "keeps either :rating or :secure if only the other is passed as a default" do
+      @klass.has_gravatar :defaults => { :secure => true }
+      @klass.gravatar_defaults.should == { :rating => 'PG', :secure => true }
     end
     
     it "changes .gravatar_source" do
@@ -29,9 +57,20 @@ describe "Gravtastic::Model" do
       }.should change(@klass, :gravatar_source)
     end
     
+    it "changes .gravatar_defaults" do
+      lambda {
+        @klass.has_gravatar :defaults => { :rating => 'R18' }
+      }.should change(@klass, :gravatar_defaults)
+    end
+    
     it "sets .gravatar_source to the value of :on" do
       @klass.has_gravatar :on => :other_method
       @klass.gravatar_source.should == :other_method
+    end
+    
+    it "sets .gravatar_defaults to the value of :defaults" do
+      @klass.has_gravatar :defaults => { :rating => 'R18'}
+      @klass.gravatar_defaults.should == { :rating => 'R18', :secure => false }
     end
     
   end
@@ -90,6 +129,7 @@ describe "Gravtastic::Model" do
       @user.stub!(:email).and_return('joe@example.com')
       @user.stub!(:name).and_return('Joe Bloggs')
       @user.class.stub!(:gravatar_source).and_return(:email)
+      @user.class.stub!(:gravatar_defaults).and_return({:rating => 'PG'})
     end
     
     it "is not nil when .gravatar_source is not nil" do
@@ -147,6 +187,11 @@ describe "Gravtastic::Model" do
     
     it "defaults to a 'PG' rating" do
       @user.gravatar_url(:rating => 'PG').should == @user.gravatar_url
+    end
+    
+    it "uses the defaults from .gravatar_defaults" do
+      @user.class.stub!(:gravatar_defaults).and_return({ :size => 20, :rating => 'R18'})
+      @user.gravatar_url.should == valid_gravatar_url + '?r=R18&s=20'
     end
     
     def valid_gravatar_url # :nodoc:

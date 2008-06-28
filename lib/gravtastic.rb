@@ -57,8 +57,12 @@ module Gravtastic
       # 
       #   has_gravatar :on => :author_email
       # 
+      #   has_gravatar :defaults => { :rating => 'R18' }
+      # 
       def has_gravatar(options={:on => :email})
         @gravatar_source = options[:on]
+        options[:defaults] ||= {}
+        @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options[:defaults])
       end
 
       # 
@@ -70,7 +74,14 @@ module Gravtastic
       def gravatar_source
         @gravatar_source
       end
-
+      
+      # 
+      # Returns a hash of all the default gravtastic options.
+      # 
+      def gravatar_defaults
+        @gravatar_defaults
+      end
+      
       # 
       # Returns <tt>true</tt> if the gravatar_source is set. <tt>false</tt> if not. Easy!
       # 
@@ -92,7 +103,7 @@ module Gravtastic
     # 
     # Returns a string with the URL for the instance's Gravatar.
     # 
-    # It defaults to <tt>:rating => 'PG'</tt>
+    # It defaults to <tt>:rating => 'PG'</tt> and <tt>:secure => false</tt>
     # 
     # Examples:
     # 
@@ -105,9 +116,10 @@ module Gravtastic
     #   current_user.gravatar_url(:secure => true)
     #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
     # 
-    def gravatar_url(options={})
-      options[:rating] ||= 'PG'
-      options[:secure] ||= false
+    def gravatar_url(options={})      
+      
+      options = self.class.gravatar_defaults.merge(options)
+      
       if gravatar_id
         @gravatar_url = 'http' + (options[:secure] ? 's://secure.' : '://') + 'gravatar.com/avatar/' + gravatar_id + '.png' + parse_url_options_hash(options)
       end

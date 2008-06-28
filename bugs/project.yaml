@@ -98,3 +98,12 @@ releases:
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - released
     - Accepted!
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.6.0
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-06-28 02:21:11.725722 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - Allows adding manual setting of defaults and updated README.

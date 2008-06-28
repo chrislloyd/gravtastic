@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Allow has_gravatar to take a defaults hash.
+desc: The defaults would then be used whenever gravatar_url would be called.
+type: :feature
+component: Gravtastic
+release: 1.6.0
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-06-28 02:22:44.256376 Z
+references: []
+
+id: d9c548be2ea6a0e07cba91e1662c8ce253730004
+log_events: 
+- - 2008-06-28 02:22:45.456757 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-06-28 02:23:35.848396 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - changed status from unstarted to in_progress
+  - ""
+- - 2008-06-28 02:23:46.126307 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed issue with disposition fixed
+  - ""
