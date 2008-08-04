@@ -34,7 +34,7 @@ require 'cgi'
 # Note that it defaults to a PG rating. You can specify extra options with a hash:
 # 
 #   current_user.gravatar_url(:rating => 'R18', :size => 512)
-#   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG&s=512"
+#   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=R18&s=512"
 # 
 #   current_user.gravatar_url(:secure => true)
 #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
