@@ -12,16 +12,20 @@ require 'cgi'
 # 
 # Somewhere in your application you need to <tt>require 'gravtastic'</tt>. In Rails >= 2.1 you can forego this and just add a dependency gem dependency for Gravtastic.
 # 
-#     config.gem 'gravtastic', :source => 'http://gems.github.com/'
+#   config.gem 'gravtastic'
 # 
-# The next step is to give your model a Gravatar:
+# If you are using Merb & DataMapper you can add do the same by adding the following to your init.rb file:
+# 
+#   dependency 'gravtastic'
+# 
+# Make sure you add this after either the <tt>use_orm :datamapper</tt> line or after a DataMapper extension. The next step is to give your model a Gravatar:
 # 
 #   class User
 #     is_gravtastic
 #   end
 # 
-# If you are using a standard Ruby class or Datamapper resource you have to add the line <tt>include Gravtastic::Model</tt> before <tt>has_gravatar</tt>.
-# 
+# If you are using a standard Ruby class you have to add the line <tt>include Gravtastic::Resource</tt> before <tt>is_gravtastic</tt>.
+#   
 # This defaults to looking for the gravatar ID on the <tt>email</tt> method. So, if your <tt>User</tt> has an <tt>email</tt> then it will send that to Gravatar to get their picture. You can change the default gravatar source like this:
 # 
 #   is_gravtastic :with => :author_email
@@ -35,9 +39,15 @@ require 'cgi'
 # 
 #   current_user.gravatar_url(:rating => 'R18', :size => 512)
 #   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=R18&s=512"
-# 
+#   
 #   current_user.gravatar_url(:secure => true)
 #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
+#   
+# However, to DRY things up you can specify defaults in the class declaration.
+# 
+#   is_gravtastic :with => :author_email, :rating => 'R18', :size => 20
+# 
+# Nice, now all the calls to gravatar_url will have the defaults you have specified. Any options that you pass when you use <tt>gravatar_url</tt> will over-ride these class-defaults.
 # 
 module Gravtastic
   module Resource
@@ -122,13 +132,15 @@ module Gravtastic
     def gravatar_url(options={})      
       options = self.class.gravatar_defaults.merge(options)
       
-      @gravatar_url = gravatar_url_base(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
+      @gravatar_url = gravatar_hostname(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
     end
 
     private
-
+    
+    # 
+    # Parses a hash options for the image parameters. Returns a CGI escaped string.
+    # 
     def parse_url_options_hash(options)
-      
       options.delete_if { |key,_| ![:size, :rating, :default].include?(key) }
       
       unless options.empty?
@@ -140,11 +152,17 @@ module Gravtastic
         ''
       end
     end
-
-    def gravatar_url_base(secure)
+    
+    # 
+    # Returns the Gravatar.com hostname
+    # 
+    def gravatar_hostname(secure)
       'http' + (secure ? 's://secure.' : '://') + 'gravatar.com/avatar/'
     end
 
+    # 
+    # Returns the filename of the gravatar image.
+    # 
     def gravatar_filename
       if gravatar_id
         gravatar_id + '.png'
@@ -158,7 +176,7 @@ end
 
 ActiveRecord::Base.send(:include, Gravtastic::Resource) if defined?(ActiveRecord) # :nodoc:
 
-if defined?(DataMapper)
+if defined?(DataMapper) # :nodoc:
   DataMapper::Resource.append_inclusions Gravtastic::Resource
   DataMapper::Model.append_extensions Gravtastic::Resource::ClassMethods
 end

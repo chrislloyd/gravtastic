@@ -12,13 +12,17 @@ Somewhere in your application you need to @require 'gravtastic'@. In Rails >= 2.
 
     config.gem 'gravtastic'
 
-The next step is to give your model a Gravatar:
+If you are using Merb & DataMapper you can add do the same by adding the following to your init.rb file:
+
+  dependency 'gravtastic'
+
+Make sure you add this after either the @use_orm :datamapper@ line or after a DataMapper extension. The next step is to give your model a Gravatar:
 
   class User
     is_gravtastic
   end
 
-If you are using a standard Ruby class or Datamapper resource you have to add the line @include Gravtastic::Model@ before @is_gravtastic@.
+If you are using a standard Ruby class you have to add the line @include Gravtastic::Resource@ before @is_gravtastic@.
   
 This defaults to looking for the gravatar ID on the @email@ method. So, if your @User@ has an @email@ then it will send that to Gravatar to get their picture. You can change the default gravatar source like this:
 
@@ -41,7 +45,7 @@ However, to DRY things up you can specify defaults in the class declaration.
 
   is_gravtastic :with => :author_email, :rating => 'R18', :size => 20
 
-Nice, now all the calls to gravatar_url will have the defaults you have specified.
+Nice, now all the calls to gravatar_url will have the defaults you have specified. Any options that you pass when you use @gravatar_url@ will over-ride these class-defaults.
 
 PS.  Bonus points for anybody who can tell me what that users email is!
 
