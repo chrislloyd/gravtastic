@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{gravtastic}
-  s.version = "1.6.0"
+  s.version = "1.7.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chris Lloyd"]
-  s.date = %q{2008-06-28}
+  s.date = %q{2008-08-30}
   s.description = %q{Easily add Gravatars to your Ruby objects.}
   s.email = %q{christopher.lloyd@gmail.com}
   s.extra_rdoc_files = ["README.textile", "LICENSE"]

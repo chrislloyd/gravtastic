@@ -111,3 +111,16 @@ releases:
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.7.0
+  status: :released
+  release_time: 2008-08-30 05:55:22.017006 Z
+  log_events: 
+  - - 2008-08-30 05:54:57.648614 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - Fixed a critical bug where the gem would blow up if the gravatar_source wasn't a string.
+  - - 2008-08-30 05:55:22.017022 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
+    - ""
