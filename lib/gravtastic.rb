@@ -59,8 +59,8 @@ module Gravtastic
       # 
       #   has_gravatar :defaults => { :rating => 'R18' }
       # 
-      def has_gravatar(options={:on => :email})
-        @gravatar_source = options[:on]
+      def has_gravatar(options={})
+        @gravatar_source = options[:on] || :email
         options[:defaults] ||= {}
         @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options[:defaults])
       end

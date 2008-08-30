@@ -124,3 +124,12 @@ releases:
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: 1.7.1
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-08-30 06:17:55.030925 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - created
+    - ""

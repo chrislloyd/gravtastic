@@ -1,0 +1,26 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Passing :defaults to .has_gravatar doesn't default .gravatar_source to :email.
+desc: As the title says.
+type: :bugfix
+component: Gravtastic
+release: 1.7.1
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-08-30 06:17:29.198805 Z
+references: []
+
+id: b8c2a3b507b5de3da0121a1b9607b0fd10ddf0b9
+log_events: 
+- - 2008-08-30 06:17:32.414633 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-08-30 06:19:18.935729 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - assigned to release 1.7.1 from unassigned
+  - ""
+- - 2008-08-30 06:22:21.977467 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed with disposition fixed
+  - ""

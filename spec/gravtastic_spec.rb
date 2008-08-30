@@ -46,6 +46,11 @@ describe "Gravtastic::Model" do
       @klass.gravatar_defaults.should == { :rating => 'PG', :secure => false }
     end
     
+    it "sets .gravatar_source to :email by default, even when :defaults are supplied" do
+      @klass.has_gravatar :defaults => { :secure => true }
+      @klass.gravatar_source.should == :email
+    end
+    
     it "keeps either :rating or :secure if only the other is passed as a default" do
       @klass.has_gravatar :defaults => { :secure => true }
       @klass.gravatar_defaults.should == { :rating => 'PG', :secure => true }
