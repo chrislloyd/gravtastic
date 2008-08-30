@@ -121,6 +121,11 @@ describe "Gravtastic::Model" do
       @user.gravatar_id.should == 'f5b8fb60c6116331da07c65b96a8a1d1'
     end
     
+    it "is nil when email is not a string" do
+      @user.stub!(:email).and_return(nil)
+      @user.gravatar_id.should == nil
+    end
+    
   end
   
   describe "#gravatar_url" do
@@ -136,9 +141,9 @@ describe "Gravtastic::Model" do
       @user.gravatar_url.should_not be_nil
     end
     
-    it "is nil when .gravatar_source is nil" do
+    it "returns a default Gravatar url when .gravatar_source is nil" do
       @user.class.stub!(:gravatar_source).and_return(nil)
-      @user.gravatar_url.should be_nil
+      @user.gravatar_url.should =~ /http:\/\/gravatar.com\/avatar/
     end
     
     it "always specifies a png resource type" do
@@ -192,6 +197,11 @@ describe "Gravtastic::Model" do
     it "uses the defaults from .gravatar_defaults" do
       @user.class.stub!(:gravatar_defaults).and_return({ :size => 20, :rating => 'R18'})
       @user.gravatar_url.should == valid_gravatar_url + '?r=R18&s=20'
+    end
+    
+    it "returns a default Gravatar url when #gravatar_id is nil" do
+      @user.stub!(:email).and_return(nil)
+      @user.gravatar_url.should =~ /http:\/\/gravatar.com\/avatar/
     end
     
     def valid_gravatar_url # :nodoc:

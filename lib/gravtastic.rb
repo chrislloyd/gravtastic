@@ -95,8 +95,8 @@ module Gravtastic
     # The raw MD5 hash used by Gravatar, generated from the ClassMethods#gravatar_source.
     # 
     def gravatar_id
-      if self.class.gravatar_source && value = send(self.class.gravatar_source).downcase
-        @gravatar_id = Digest::MD5.hexdigest(value.to_s)
+      if self.class.gravatar_source && value = send(self.class.gravatar_source)
+        @gravatar_id = Digest::MD5.hexdigest(value.to_s.downcase)
       end
     end
 
@@ -117,12 +117,9 @@ module Gravtastic
     #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
     # 
     def gravatar_url(options={})      
-      
       options = self.class.gravatar_defaults.merge(options)
       
-      if gravatar_id
-        @gravatar_url = 'http' + (options[:secure] ? 's://secure.' : '://') + 'gravatar.com/avatar/' + gravatar_id + '.png' + parse_url_options_hash(options)
-      end
+      @gravatar_url = gravatar_url_base(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
     end
 
     private
@@ -142,7 +139,19 @@ module Gravtastic
         ''
       end
     end
-
+    
+    def gravatar_url_base(secure)
+      'http' + (secure ? 's://secure.' : '://') + 'gravatar.com/avatar/'
+    end
+    
+    def gravatar_filename
+      if gravatar_id
+        gravatar_id + '.png'
+      else
+        ''
+      end
+    end
+    
   end
 end
 
