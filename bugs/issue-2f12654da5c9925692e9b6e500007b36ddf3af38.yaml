@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Dry has_gravatar syntax
+desc: Dry up the has_gravatar syntax so that defaults don't have to be passed to the :defaults hash.
+type: :feature
+component: Gravtastic
+release: 2.0.0
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-08-30 08:06:25.202121 Z
+references: []
+
+id: 2f12654da5c9925692e9b6e500007b36ddf3af38
+log_events: 
+- - 2008-08-30 08:06:27.010138 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-08-30 08:41:39.343634 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed with disposition fixed
+  - ""

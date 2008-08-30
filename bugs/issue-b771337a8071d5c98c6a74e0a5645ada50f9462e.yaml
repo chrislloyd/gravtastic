@@ -1,0 +1,22 @@
+--- !ditz.rubyforge.org,2008-03-06/issue 
+title: Change API to is_gravtastic
+desc: Change the has_gravatar API to is_gravtastic. Alias old method so it maintains backwards compatibility.
+type: :feature
+component: Gravtastic
+release: 2.0.0
+reporter: Chris Lloyd <christopher.lloyd@gmail.com>
+status: :closed
+disposition: :fixed
+creation_time: 2008-08-30 08:07:16.642793 Z
+references: []
+
+id: b771337a8071d5c98c6a74e0a5645ada50f9462e
+log_events: 
+- - 2008-08-30 08:07:18.202582 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - created
+  - ""
+- - 2008-08-30 08:41:24.183263 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed with disposition fixed
+  - ""

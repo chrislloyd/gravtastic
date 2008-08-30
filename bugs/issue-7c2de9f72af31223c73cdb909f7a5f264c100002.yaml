@@ -3,7 +3,7 @@ title: Automagically include in DataMapper resources.
 desc: When required as a Gem dependency in Merb, automagically be included in Datamapper Resources.
 type: :feature
 component: Gravtastic
-release: 
+release: 2.0.0
 reporter: Chris Lloyd <christopher.lloyd@gmail.com>
 status: :unstarted
 disposition: 

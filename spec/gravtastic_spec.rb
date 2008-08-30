@@ -34,47 +34,47 @@ describe "Gravtastic::Model" do
     
   end
   
-  describe ".has_gravatar" do
+  describe ".is_gravtastic" do
     
     it "sets .gravatar_source to :email by default" do
-      @klass.has_gravatar
+      @klass.is_gravtastic
       @klass.gravatar_source.should == :email
     end
     
     it "sets .gravatar_defaults to { :rating => 'PG', :secure => false } by default" do
-      @klass.has_gravatar
+      @klass.is_gravtastic
       @klass.gravatar_defaults.should == { :rating => 'PG', :secure => false }
     end
     
-    it "sets .gravatar_source to :email by default, even when :defaults are supplied" do
-      @klass.has_gravatar :defaults => { :secure => true }
+    it "sets .gravatar_source to :email by default, even when defaults are supplied" do
+      @klass.is_gravtastic :secure => true
       @klass.gravatar_source.should == :email
     end
     
     it "keeps either :rating or :secure if only the other is passed as a default" do
-      @klass.has_gravatar :defaults => { :secure => true }
+      @klass.is_gravtastic :secure => true
       @klass.gravatar_defaults.should == { :rating => 'PG', :secure => true }
     end
     
     it "changes .gravatar_source" do
       lambda {
-        @klass.has_gravatar :on => :other_method
+        @klass.is_gravtastic :with => :other_method
       }.should change(@klass, :gravatar_source)
     end
     
     it "changes .gravatar_defaults" do
       lambda {
-        @klass.has_gravatar :defaults => { :rating => 'R18' }
+        @klass.is_gravtastic :rating => 'R18'
       }.should change(@klass, :gravatar_defaults)
     end
     
     it "sets .gravatar_source to the value of :on" do
-      @klass.has_gravatar :on => :other_method
+      @klass.is_gravtastic :with => :other_method
       @klass.gravatar_source.should == :other_method
     end
     
     it "sets .gravatar_defaults to the value of :defaults" do
-      @klass.has_gravatar :defaults => { :rating => 'R18'}
+      @klass.is_gravtastic :rating => 'R18'
       @klass.gravatar_defaults.should == { :rating => 'R18', :secure => false }
     end
     

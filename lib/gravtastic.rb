@@ -17,14 +17,14 @@ require 'cgi'
 # The next step is to give your model a Gravatar:
 # 
 #   class User
-#     has_gravatar
+#     is_gravtastic
 #   end
 # 
 # If you are using a standard Ruby class or Datamapper resource you have to add the line <tt>include Gravtastic::Model</tt> before <tt>has_gravatar</tt>.
 # 
 # This defaults to looking for the gravatar ID on the <tt>email</tt> method. So, if your <tt>User</tt> has an <tt>email</tt> then it will send that to Gravatar to get their picture. You can change the default gravatar source like this:
 # 
-#   has_gravatar :on => :author_email
+#   is_gravtastic :with => :author_email
 # 
 # Now, you can access your object's gravatar with the <tt>gravatar_url</tt> method:
 # 
@@ -53,23 +53,26 @@ module Gravtastic
       # 
       # Examples:
       # 
-      #   has_gravatar
+      #   is_gravtastic
       # 
-      #   has_gravatar :on => :author_email
+      #   is_gravtastic :with => :author_email
       # 
-      #   has_gravatar :defaults => { :rating => 'R18' }
+      #   is_gravtastic :with => :author_email, :rating => 'R18', :secure => true
       # 
-      def has_gravatar(options={})
-        @gravatar_source = options[:on] || :email
-        options[:defaults] ||= {}
-        @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options[:defaults])
+      def is_gravtastic(options={})
+        @gravatar_source = options[:with] || :email
+        
+        options.delete_if {|key,_| ![:size, :rating, :default, :secure].include?(key) }
+        @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options)
       end
-
+      
+      alias :has_gravatar :is_gravtastic
+      
       # 
       # Returns a symbol of the instance method where the Gravatar is pulled from.
       # 
       # For example, if your users email is returned by the method <tt>#gobagaldy_gook</tt> then it
-      # will return the symbol <tt>:'gobagaldy_gook'</tt>.
+      # will return the symbol <tt>:gobagaldy_gook</tt>.
       # 
       def gravatar_source
         @gravatar_source
@@ -121,14 +124,12 @@ module Gravtastic
       
       @gravatar_url = gravatar_url_base(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
     end
-
-    private
     
-    GRAVTASTIC_VALID_PARAMS = [:size, :rating, :default]
+    private
     
     def parse_url_options_hash(options)
       
-      options.delete_if { |key,_| ![:size,:rating,:default].include?(key) }
+      options.delete_if { |key,_| ![:size, :rating, :default].include?(key) }
       
       unless options.empty?
         '?' + options.map do |pair|
