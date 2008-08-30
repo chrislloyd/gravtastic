@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{gravtastic}
-  s.version = "1.7.1"
+  s.version = "2.0.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Chris Lloyd"]
@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.description = %q{Easily add Gravatars to your Ruby objects.}
   s.email = %q{christopher.lloyd@gmail.com}
   s.extra_rdoc_files = ["README.textile", "LICENSE"]
-  s.files = ["LICENSE", "README.textile", "Rakefile", "lib/gravtastic.rb", "spec/gravtastic_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
+  s.files = ["LICENSE", "README.textile", "Rakefile", "lib/gravtastic.rb", "spec/gravtastic_integration_spec.rb", "spec/gravtastic_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/chrislloyd/gravtastic}
   s.require_paths = ["lib"]

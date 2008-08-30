@@ -139,10 +139,14 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: 2.0.0
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-08-30 12:16:41.208711 Z
   log_events: 
   - - 2008-08-30 08:05:07.857569 Z
     - Chris Lloyd <christopher.lloyd@gmail.com>
     - created
     - API changes and official Datamapper support.
+  - - 2008-08-30 12:16:41.208727 Z
+    - Chris Lloyd <christopher.lloyd@gmail.com>
+    - released
+    - ""
