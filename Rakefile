@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'rake/gempackagetask'
+require 'rake/rdoctask'
 require 'rubygems/specification'
 require 'spec/rake/spectask'
 require 'date'
@@ -31,8 +32,17 @@ spec = Gem::Specification.new do |s|
   s.files = %w(LICENSE README.textile Rakefile) + Dir.glob("{lib,spec}/**/*")
 end
 
+desc "Run Specs"
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.gem_spec = spec
+end
+
+desc "Generate Documentation"
+Rake::RDocTask.new do |rdoc|
+  rdoc.rdoc_dir = 'doc'
+  rdoc.title = 'Gravtastic'
+  rdoc.options << '--line-numbers' << '--inline-source' << '--main' << 'Gravtastic'
+  rdoc.rdoc_files.include(FileList[ 'lib/**/*.rb', 'README.textile', 'LICENSE'])
 end
 
 task :default => :spec
