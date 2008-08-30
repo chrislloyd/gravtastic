@@ -40,14 +40,14 @@ require 'cgi'
 #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
 # 
 module Gravtastic
-  module Model
+  module Resource
 
     def self.included(base) # :nodoc:
       base.extend(ClassMethods)
     end
-
+    
     module ClassMethods
-      
+
       # 
       # Sets the gravatar_source. Basically starts this whole shindig.
       # 
@@ -61,13 +61,13 @@ module Gravtastic
       # 
       def is_gravtastic(options={})
         @gravatar_source = options[:with] || :email
-        
+
         options.delete_if {|key,_| ![:size, :rating, :default, :secure].include?(key) }
         @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options)
       end
-      
+
       alias :has_gravatar :is_gravtastic
-      
+
       # 
       # Returns a symbol of the instance method where the Gravatar is pulled from.
       # 
@@ -77,14 +77,14 @@ module Gravtastic
       def gravatar_source
         @gravatar_source
       end
-      
+
       # 
       # Returns a hash of all the default gravtastic options.
       # 
       def gravatar_defaults
         @gravatar_defaults
       end
-      
+
       # 
       # Returns <tt>true</tt> if the gravatar_source is set. <tt>false</tt> if not. Easy!
       # 
@@ -124,9 +124,9 @@ module Gravtastic
       
       @gravatar_url = gravatar_url_base(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
     end
-    
+
     private
-    
+
     def parse_url_options_hash(options)
       
       options.delete_if { |key,_| ![:size, :rating, :default].include?(key) }
@@ -140,11 +140,11 @@ module Gravtastic
         ''
       end
     end
-    
+
     def gravatar_url_base(secure)
       'http' + (secure ? 's://secure.' : '://') + 'gravatar.com/avatar/'
     end
-    
+
     def gravatar_filename
       if gravatar_id
         gravatar_id + '.png'
@@ -152,8 +152,13 @@ module Gravtastic
         ''
       end
     end
-    
+
   end
 end
 
-ActiveRecord::Base.send(:include, Gravtastic::Model) if defined?(ActiveRecord) # :nodoc:
+ActiveRecord::Base.send(:include, Gravtastic::Resource) if defined?(ActiveRecord) # :nodoc:
+
+if defined?(DataMapper)
+  DataMapper::Resource.append_inclusions Gravtastic::Resource
+  DataMapper::Model.append_extensions Gravtastic::Resource::ClassMethods
+end

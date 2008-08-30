@@ -1,10 +1,10 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
-describe "Gravtastic::Model" do
+describe Gravtastic::Resource do
 
   before(:each) do
     @user = mock('User')
-    @user.class.send(:include, Gravtastic::Model)
+    @user.class.send(:include, Gravtastic::Resource)
     @klass = @user.class
   end
   

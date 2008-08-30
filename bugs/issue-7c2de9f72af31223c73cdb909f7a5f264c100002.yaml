@@ -5,8 +5,8 @@ type: :feature
 component: Gravtastic
 release: 2.0.0
 reporter: Chris Lloyd <christopher.lloyd@gmail.com>
-status: :unstarted
-disposition: 
+status: :closed
+disposition: :fixed
 creation_time: 2008-06-12 00:17:03.305026 Z
 references: []
 
@@ -15,4 +15,8 @@ log_events:
 - - 2008-06-12 00:17:05.025357 Z
   - Chris Lloyd <christopher.lloyd@gmail.com>
   - created
+  - ""
+- - 2008-08-30 08:42:24.135891 Z
+  - Chris Lloyd <christopher.lloyd@gmail.com>
+  - closed with disposition fixed
   - ""
