@@ -35,7 +35,7 @@ Now, you can access your object's gravatar with the @gravatar_url@ method:
 
 Note that it defaults to a PG rating. You can specify extra options with a hash:
 
-  current_user.gravatar_url(:rating => 'R18', :size => 512)
+  current_user.gravatar_url(:rating => 'R', :size => 512)
   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=R18&s=512"
   
   current_user.gravatar_url(:secure => true)
@@ -43,7 +43,7 @@ Note that it defaults to a PG rating. You can specify extra options with a hash:
   
 However, to DRY things up you can specify defaults in the class declaration.
 
-  is_gravtastic :with => :author_email, :rating => 'R18', :size => 20
+  is_gravtastic :with => :author_email, :rating => 'R', :size => 20
 
 Nice, now all the calls to gravatar_url will have the defaults you have specified. Any options that you pass when you use @gravatar_url@ will over-ride these class-defaults.
 
