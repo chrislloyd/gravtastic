@@ -55,6 +55,31 @@ module Gravtastic
     def self.included(base) # :nodoc:
       base.extend(ClassMethods)
     end
+
+    @@gravatar_filename_extension = 'png'
+
+    # 
+    # Returns the extension that will be used by the <tt>gravatar_url</tt> method.
+    # 
+    def self.gravatar_filename_extension
+      @@gravatar_filename_extension
+    end
+
+    # 
+    # Sets the extension that will be used by the <tt>gravatar_url</tt> method (defaults to 'png').
+    # To not have an extension at all, set this to an empty string.
+    # 
+    # Typically, set this in environment.rb or an initializer file.
+    # 
+    # Examples:
+    # 
+    #   Gravtastic::Resource.gravatar_filename_extension = 'jpg'
+    # 
+    #   Gravtastic::Resource.gravatar_filename_extension = ''
+    # 
+    def self.gravatar_filename_extension=(extension)
+      @@gravatar_filename_extension = extension
+    end
     
     module ClassMethods
 
@@ -165,7 +190,11 @@ module Gravtastic
     # 
     def gravatar_filename
       if gravatar_id
-        gravatar_id + '.png'
+        if Gravtastic::Resource.gravatar_filename_extension.empty?
+          gravatar_id
+        else
+          gravatar_id + '.' + Gravtastic::Resource.gravatar_filename_extension
+        end
       else
         ''
       end

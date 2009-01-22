@@ -213,6 +213,24 @@ describe Gravtastic::Resource do
       'http://gravatar.com/avatar/f5b8fb60c6116331da07c65b96a8a1d1.png'
     end
     
+    describe "with Gravtastic::Resource.gravatar_filename_extension set to 'jpg'" do
+
+      it "specifies a jpg resource type" do
+        Gravtastic::Resource.gravatar_filename_extension = 'jpg'
+        @user.gravatar_url.should match(/\.jpg/)
+      end
+
+    end
+
+    describe "with Gravtastic::Resource.gravatar_filename_extension set to ''" do
+
+      it "specifies no resource type" do
+        Gravtastic::Resource.gravatar_filename_extension = ''
+        @user.gravatar_url.should == valid_gravatar_url.gsub(/\.png/, '') + '?r=PG'
+      end
+
+    end
+    
   end
   
 end
