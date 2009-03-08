@@ -52,7 +52,7 @@ desc "Run all examples"
 Spec::Rake::SpecTask.new('spec') do |t|
   t.spec_opts = ['--options','spec/spec.opts']
   t.spec_files = FileList['spec/**/*.rb']
-  t.rcov = true
+  # t.rcov = true
 end
 
 desc "install the gem locally"

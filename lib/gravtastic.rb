@@ -50,60 +50,67 @@ require 'cgi'
 # Nice, now all the calls to gravatar_url will have the defaults you have specified. Any options that you pass when you use <tt>gravatar_url</tt> will over-ride these class-defaults.
 # 
 module Gravtastic
-  module Resource
+  
+  def self.included(base)
+    base.extend(SingletonMethods)
+  end
+  
+  module SingletonMethods
+  
+    # 
+    # Sets the gravatar_source. Basically starts this whole shindig.
+    # 
+    # Examples:
+    # 
+    #   is_gravtastic
+    # 
+    #   is_gravtastic :with => :author_email
+    # 
+    #   is_gravtastic :with => :author_email, :rating => 'R18', :secure => true
+    # 
+    def is_gravtastic(options={})
+      extend ClassMethods
+      include InstanceMethods
+      
+      @gravatar_source = options[:with] || :email
 
-    def self.included(base) # :nodoc:
-      base.extend(ClassMethods)
-    end
-    
-    module ClassMethods
-
-      # 
-      # Sets the gravatar_source. Basically starts this whole shindig.
-      # 
-      # Examples:
-      # 
-      #   is_gravtastic
-      # 
-      #   is_gravtastic :with => :author_email
-      # 
-      #   is_gravtastic :with => :author_email, :rating => 'R18', :secure => true
-      # 
-      def is_gravtastic(options={})
-        @gravatar_source = options[:with] || :email
-
-        options.delete_if {|key,_| ![:size, :rating, :default, :secure].include?(key) }
-        @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options)
-      end
-
-      alias :has_gravatar :is_gravtastic
-
-      # 
-      # Returns a symbol of the instance method where the Gravatar is pulled from.
-      # 
-      # For example, if your users email is returned by the method <tt>#gobagaldy_gook</tt> then it
-      # will return the symbol <tt>:gobagaldy_gook</tt>.
-      # 
-      def gravatar_source
-        @gravatar_source
-      end
-
-      # 
-      # Returns a hash of all the default gravtastic options.
-      # 
-      def gravatar_defaults
-        @gravatar_defaults
-      end
-
-      # 
-      # Returns <tt>true</tt> if the gravatar_source is set. <tt>false</tt> if not. Easy!
-      # 
-      def has_gravatar?
-        !!gravatar_source
-      end
-
+      options.delete_if {|key,_| ![:size, :rating, :default, :secure].include?(key) }
+      @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options)
     end
 
+    alias :has_gravatar :is_gravtastic
+  
+  end
+  
+  module ClassMethods
+    # 
+    # Returns a symbol of the instance method where the Gravatar is pulled from.
+    # 
+    # For example, if your users email is returned by the method <tt>#gobagaldy_gook</tt> then it
+    # will return the symbol <tt>:gobagaldy_gook</tt>.
+    # 
+    def gravatar_source
+      @gravatar_source
+    end
+
+    # 
+    # Returns a hash of all the default gravtastic options.
+    # 
+    def gravatar_defaults
+      @gravatar_defaults
+    end
+
+    # 
+    # Returns <tt>true</tt> if the gravatar_source is set. <tt>false</tt> if not. Easy!
+    # 
+    def has_gravatar?
+      !!gravatar_source
+    end
+
+  end
+  
+  module InstanceMethods
+  
     # 
     # The raw MD5 hash used by Gravatar, generated from the ClassMethods#gravatar_source.
     # 
@@ -131,18 +138,18 @@ module Gravtastic
     # 
     def gravatar_url(options={})      
       options = self.class.gravatar_defaults.merge(options)
-      
+    
       @gravatar_url = gravatar_hostname(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
     end
 
     private
-    
+  
     # 
     # Parses a hash options for the image parameters. Returns a CGI escaped string.
     # 
     def parse_url_options_hash(options)
       options.delete_if { |key,_| ![:size, :rating, :default].include?(key) }
-      
+    
       unless options.empty?
         '?' + options.map do |pair|
           pair[0] = pair[0].to_s[0,1] # Get the first character of the option
@@ -152,7 +159,7 @@ module Gravtastic
         ''
       end
     end
-    
+  
     # 
     # Returns the Gravatar.com hostname
     # 
@@ -170,13 +177,10 @@ module Gravtastic
         ''
       end
     end
-
+    
   end
+  
 end
 
-ActiveRecord::Base.send(:include, Gravtastic::Resource) if defined?(ActiveRecord) # :nodoc:
-
-if defined?(DataMapper) # :nodoc:
-  DataMapper::Resource.append_inclusions Gravtastic::Resource
-  DataMapper::Model.append_extensions Gravtastic::Resource::ClassMethods
-end
+ActiveRecord::Base.send(:include, Gravtastic) if defined?(ActiveRecord) # :nodoc:
+DataMapper::Resource.append_inclusions(Gravtastic) if defined?(DataMapper) # :nodoc:

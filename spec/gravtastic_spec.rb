@@ -1,20 +1,18 @@
 require File.dirname(__FILE__) + '/spec_helper'
+require 'gravtastic'
 
-describe Gravtastic::Resource do
+describe Gravtastic do
 
   before(:each) do
     @user = mock('User')
-    @user.class.send(:include, Gravtastic::Resource)
+    @user.class.send(:include, Gravtastic)
     @klass = @user.class
   end
   
   describe ".gravatar_source" do
     
-    it "is nil if unset" do
-      @klass.gravatar_source.should be_nil
-    end
-    
     it "returns the value of @gravatar_source" do
+      @klass.is_gravtastic
       @klass.instance_variable_set('@gravatar_source', :foo)
       @klass.gravatar_source.should == :foo
     end
@@ -22,10 +20,6 @@ describe Gravtastic::Resource do
   end
   
   describe ".gravatar_defaults" do
-    
-    it "it nil if unset" do
-      @klass.gravatar_defaults.should be_nil
-    end
     
     it "returns the value of @gravatar_defaults" do
       @klass.instance_variable_set('@gravatar_defaults', :foo)

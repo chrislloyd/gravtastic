@@ -3,8 +3,8 @@ require 'rubygems'
 
 require 'activerecord'
 require 'dm-core'
+require 'gravtastic'
 
-reload_gravtastic!
 
 class User
   include DataMapper::Resource
@@ -14,7 +14,7 @@ end
 describe ActiveRecord::Base do
   
   it "includes Gravtastic::Resource" do
-    ActiveRecord::Base.included_modules.should include(Gravtastic::Resource)
+    ActiveRecord::Base.included_modules.should include(Gravtastic)
   end
   
   it "responds to .is_gravtastic" do
@@ -26,7 +26,7 @@ end
 describe DataMapper::Resource do
   
   it "includes Gravtastic::Resource" do
-    User.included_modules.should include(Gravtastic::Resource)
+    User.included_modules.should include(Gravtastic)
   end
   
   it "responds to .is_gravtastic" do
