@@ -3,6 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'digest/md5'
 require 'cgi'
+require 'uri'
 
 # = Gravtastic - Easily add Gravatars to your Ruby objects.
 # 
@@ -56,126 +57,65 @@ module Gravtastic
   end
   
   module SingletonMethods
-  
-    # 
-    # Sets the gravatar_source. Basically starts this whole shindig.
-    # 
-    # Examples:
-    # 
-    #   is_gravtastic
-    # 
-    #   is_gravtastic :with => :author_email
-    # 
-    #   is_gravtastic :with => :author_email, :rating => 'R18', :secure => true
-    # 
-    def is_gravtastic(options={})
+    
+    def is_gravtastic(source = :email, options={})
       extend ClassMethods
       include InstanceMethods
       
-      @gravatar_source = options[:with] || :email
-
-      options.delete_if {|key,_| ![:size, :rating, :default, :secure].include?(key) }
-      @gravatar_defaults = {:rating => 'PG', :secure => false}.merge(options)
+      @gravatar_source = source
+      @gravatar_defaults = {
+        :rating => 'PG',
+        :secure => false,
+        :filetype => :png
+      }.merge(options)
     end
-
+    
     alias :has_gravatar :is_gravtastic
   
   end
   
   module ClassMethods
-    # 
-    # Returns a symbol of the instance method where the Gravatar is pulled from.
-    # 
-    # For example, if your users email is returned by the method <tt>#gobagaldy_gook</tt> then it
-    # will return the symbol <tt>:gobagaldy_gook</tt>.
-    # 
+    
+    # attr_reader :gravatar_source, :gravatar_defaults
+    
     def gravatar_source
       @gravatar_source
     end
-
-    # 
-    # Returns a hash of all the default gravtastic options.
-    # 
+    
     def gravatar_defaults
       @gravatar_defaults
     end
-
-    # 
-    # Returns <tt>true</tt> if the gravatar_source is set. <tt>false</tt> if not. Easy!
-    # 
-    def has_gravatar?
-      !!gravatar_source
-    end
-
+    
   end
   
   module InstanceMethods
-  
-    # 
-    # The raw MD5 hash used by Gravatar, generated from the ClassMethods#gravatar_source.
-    # 
+    
     def gravatar_id
-      if self.class.gravatar_source && value = send(self.class.gravatar_source)
-        @gravatar_id = Digest::MD5.hexdigest(value.to_s.downcase)
-      end
+      Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
     end
-
-    # 
-    # Returns a string with the URL for the instance's Gravatar.
-    # 
-    # It defaults to <tt>:rating => 'PG'</tt> and <tt>:secure => false</tt>
-    # 
-    # Examples:
-    # 
-    #   current_user.gravatar_url
-    #   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
-    # 
-    #   current_user.gravatar_url(:rating => 'R18', :size => 512, :default => 'http://example.com/images/example.jpg')
-    #   => "http://gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?d=http%3A%2F%2Fexample.com%2Fimages%2Fexample.jpg&r=R18&s=512"
-    # 
-    #   current_user.gravatar_url(:secure => true)
-    #   => "https://secure.gravatar.com/e9e719b44653a9300e1567f09f6b2e9e.png?r=PG"
-    # 
+    
     def gravatar_url(options={})      
       options = self.class.gravatar_defaults.merge(options)
-    
-      @gravatar_url = gravatar_hostname(options[:secure]) + gravatar_filename + parse_url_options_hash(options)
+      gravatar_hostname(options.delete(:secure)) +
+        gravatar_filename(options.delete(:filetype)) +
+        url_params_from_hash(options)
     end
-
-    private
-  
-    # 
-    # Parses a hash options for the image parameters. Returns a CGI escaped string.
-    # 
-    def parse_url_options_hash(options)
-      options.delete_if { |key,_| ![:size, :rating, :default].include?(key) }
     
-      unless options.empty?
-        '?' + options.map do |pair|
-          pair[0] = pair[0].to_s[0,1] # Get the first character of the option
-          pair.map{|item| item = CGI::escape(item.to_s) }.join('=') # Join key & value together
-        end.sort.join('&') # Join options together
-      else
-        ''
-      end
+  private
+    
+    def url_params_from_hash(hash)
+      '?' + options.map do |pair|
+        pair.first = pair.first.to_s[0,1]
+        pair.map{|item| item = CGI::escape(item.to_s) }.join('=')
+      end.sort.join('&')
     end
-  
-    # 
-    # Returns the Gravatar.com hostname
-    # 
+    
     def gravatar_hostname(secure)
       'http' + (secure ? 's://secure.' : '://') + 'gravatar.com/avatar/'
     end
-
-    # 
-    # Returns the filename of the gravatar image.
-    # 
-    def gravatar_filename
-      if gravatar_id
-        gravatar_id + '.png'
-      else
-        ''
-      end
+    
+    def gravatar_filename(filetype)
+      "#{gravatar_id}.#{filetype}"
     end
     
   end
