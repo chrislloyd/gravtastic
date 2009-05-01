@@ -60,7 +60,8 @@ Complete List of Options
 
 <table>
   <tr>
-    <th colspan="2">Option</th>
+    <th>Option</th>
+    <th>Description</th>
     <th>Default</th>
     <th>Values<th>
   </tr>
