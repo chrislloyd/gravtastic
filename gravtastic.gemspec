@@ -8,9 +8,8 @@ Gem::Specification.new do |s|
   s.date = %q{2008-08-30}
   s.description = %q{Easily add Gravatars to your Ruby objects.}
   s.email = %q{christopher.lloyd@gmail.com}
-  s.extra_rdoc_files = ["README.textile", "LICENSE"]
-  s.files = ["LICENSE", "README.textile", "Rakefile", "lib/gravtastic.rb", "spec/gravtastic_integration_spec.rb", "spec/gravtastic_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
-  s.has_rdoc = true
+  s.files = ["LICENSE", "README.md", "Rakefile", "lib/gravtastic.rb", "spec/gravtastic_integration_spec.rb", "spec/gravtastic_spec.rb", "spec/spec.opts", "spec/spec_helper.rb"]
+  s.has_rdoc = false
   s.homepage = %q{http://github.com/chrislloyd/gravtastic}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{gravtastic}
