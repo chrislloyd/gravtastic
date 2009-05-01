@@ -1,11 +1,9 @@
-<center>The Super Fantastic Way Of Having Gravatars</center>
-============================================================
+Gravtastic
+==========
 
-<center><small>by the veritable [Chris Lloyd](http://chrislloyd.com.au)</small></center>
+<small>The super fantastic way of getting Gravatars. By [Chris](http://chrislloyd.com.au).</small>
 
-So you have a hyper-connected social leveraging app and you've heard the kids talking about these [Gravatars](http://gravatar.com). Well! You've come to the right place.
-
-In 5 minutes add Gravatarms (or sum such) to your project. Works in Rails, Merb _and_ plain ol' Ruby. Lets get started.
+In less than 5 minutes you can add Gravatars to your Ruby project. It works in Rails, Merb _and_ plain ol' Ruby.
 
 Install
 -------
@@ -20,31 +18,31 @@ Add this to your `environment.rb`:
 
     config.gem 'gravtastic', :version => '>= 2.1.0'
 
-Next, give your model a Gravatar:
+Next, say that you want a Gravatar for your model:
 
-    class User
+    class User < ActiveRecord::Base
       is_gravtastic!
     end
 
-And you are done! In your views you can now see pretty Gravatars.
+And you are done! In your views you can now use the `#gravatar_url` method:
 
-    %img{:src => @user.gravatar_url}
+    <?= image_tag @user.gravatar_url %>
 
-If you want to change the image, you may want to do this:
+If you want to change the image, you can do this:
 
-    %img{:src => @user.gravatar_url(:rating => 'R', :secure => true)}
+    <?= image_tag @user.gravatar_url(:rating => 'R', :secure => true) %>
 
-That will show R rated Gravatars over a secure connection. That could get awful boring, doing it _each_ time, over and over throughout your app. How about we provide an app wide default? In your model, just change the `is_gravtastic!` line.
+That will show R rated Gravatars over a secure connection. If you have to use that in a heap of different places around your app, it could get quite boring typing all that out. How about we set the default Gravatar settings? In your model, just change the `is_gravtastic!` line to something like this:
 
     is_gravtastic :author_email, :secure => true,
                                  :filetype => :gif,
                                  :size => 120
 
-Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, your not locked into these defaults though. You can override them by passing options to `#gravatar_url` like before.
+Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, your not locked into these defaults though: you can override them by passing options to `#gravatar_url` like before.
 
 **Plain Jane Ruby**
 
-So you just have a regular ol' Ruby app? No ActiveRecord? Awwww...
+So you just have a regular ol' Ruby app? No Rails and ActiveRecord? Awwww...
 
     require 'gravtastic'
     class BoringUser
@@ -54,17 +52,61 @@ So you just have a regular ol' Ruby app? No ActiveRecord? Awwww...
 
 And wallah! That works exactly the same as in Rails! Now all instances of the BoringUser class will have `#gravatar_url` methods.
 
+_Note: the `#gravatar_url` methods don't get included until you specify the calss `is_gravtastic!`_
 
-Fixin' Shit Fer Yerself
------------------------
+
+Complete List of Options
+------------------------
+
+<table>
+  <tr>
+    <th colspan="2">Option</th>
+    <th>Default</th>
+    <th>Values<th>
+  </tr>
+  <tr>
+    <td><b>secure</b></td>
+    <td>Gravatar transmitted with SSL</td>
+    <td>false</td>
+    <td>true/false</td>
+  </tr>
+  <tr>
+    <td><b>size</b></td>
+    <td>The size of the image</td>
+    <td>80</td>
+    <td>1..512</td>
+  </tr>
+  <tr>
+    <td><b>default</b></td>
+    <td>The default avatar image</td>
+    <td><i>none</i></td>
+    <td>Any URL, or "identicon", "monsterid", "wavatar"</td>
+  </tr>
+  <tr>
+    <td><b>rating</b></td>
+    <td>The lowest level of ratings you want to allow</td>
+    <td>G</td>
+    <td>G, PG, R or X</td>
+  </tr>
+  <tr>
+    <td><b>filetype</b></td>
+    <td>The filetype of the image</td>
+    <td>png</td>
+    <td>gif, jpg or png</td>
+  </tr>
+</table>
+
+
+Submitting Patches
+------------------
 
 Fork the project, submit a pull request and I'll get to it straight away. Or you can just view the source like:
 
     git clone git://github.com/chrislloyd/gravtastic.git
 
 
-Props
------
+Thanks
+------
 * [Xavier Shay](http://rhnh.net) and others for [Enki](http://enkiblog.com) (the reason this was originally written)
 * [Matthew Moore](http://www.matthewpaulmoore.com/) for helpful suggestions and for submitting it to the official list of Gravatar implementations.
 * [Vincent Charles](http://vincentcharles.com/) For some documentation in a previous version.
