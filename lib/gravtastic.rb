@@ -17,6 +17,11 @@ module Gravtastic
       extend ClassMethods
       include InstanceMethods
 
+      if source.is_a?(Hash)
+        options = source
+        source = :email
+      end
+
       @gravatar_defaults = {
         :rating => 'PG',
         :secure => false,
@@ -25,7 +30,8 @@ module Gravtastic
       @gravatar_source = source
     end
 
-    alias :has_gravatar :is_gravtastic
+    alias_method :has_gravatar, :is_gravtastic
+    alias_method :is_gravtastic!, :is_gravtastic
 
   end
 
