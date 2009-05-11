@@ -26,11 +26,11 @@ Next, say that you want a Gravatar for your model:
 
 And you are done! In your views you can now use the `#gravatar_url` method:
 
-    <?= image_tag @user.gravatar_url %>
+    <%= image_tag @user.gravatar_url %>
 
 If you want to change the image, you can do this:
 
-    <?= image_tag @user.gravatar_url(:rating => 'R', :secure => true) %>
+    <%= image_tag @user.gravatar_url(:rating => 'R', :secure => true) %>
 
 That will show R rated Gravatars over a secure connection. If you have to use that in a heap of different places around your app, it could get quite boring typing all that out. How about we set the default Gravatar settings? In your model, just change the `is_gravtastic!` line to something like this:
 
