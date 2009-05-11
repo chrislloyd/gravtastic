@@ -1,18 +1,14 @@
-Gravtastic
-==========
+# Gravtastic
 
 <small>The super fantastic way of getting Gravatars. By [Chris](http://chrislloyd.com.au).</small>
 
 In less than 5 minutes you can add Gravatars to your Ruby project. It works in Rails, Merb _and_ plain ol' Ruby.
 
-Install
--------
+## Install
 
     sudo gem install gravtastic
 
-
-Usage
------
+## Usage
 
 Add this to your `environment.rb`:
 
@@ -32,17 +28,17 @@ If you want to change the image, you can do this:
 
     <%= image_tag @user.gravatar_url(:rating => 'R', :secure => true) %>
 
-That will show R rated Gravatars over a secure connection. If you have to use that in a heap of different places around your app, it could get quite boring typing all that out. How about we set the default Gravatar settings? In your model, just change the `is_gravtastic!` line to something like this:
+That will show R rated Gravatars over a secure connection. If you find yourself repeating that all around your app, you can set the Gravatar defaults. In your model, just change the `is_gravtastic!` line to something like this:
 
     is_gravtastic :author_email, :secure => true,
                                  :filetype => :gif,
                                  :size => 120
 
-Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, your not locked into these defaults though: you can override them by passing options to `#gravatar_url` like before.
+Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, you arn't locked into these defaults (you can override them by passing options to `#gravatar_url` like before).
 
-**Plain Jane Ruby**
+### Plain Ruby
 
-So you just have a regular ol' Ruby app? No Rails and ActiveRecord? Awwww...
+So you just have a regular ol' Ruby app? No Rails and ActiveRecord?
 
     require 'gravtastic'
     class BoringUser
@@ -54,9 +50,7 @@ And wallah! That works exactly the same as in Rails! Now all instances of the Bo
 
 _Note: the `#gravatar_url` methods don't get included until you specify the calss `is_gravtastic!`_
 
-
-Complete List of Options
-------------------------
+### Complete List of Options
 
 <table>
   <tr>
@@ -97,42 +91,24 @@ Complete List of Options
   </tr>
 </table>
 
-
-Submitting Patches
-------------------
+## Making Changes Yourself
 
 Fork the project, submit a pull request and I'll get to it straight away. Or you can just view the source like:
 
     git clone git://github.com/chrislloyd/gravtastic.git
 
+## Thanks
 
-Thanks
-------
 * [Xavier Shay](http://rhnh.net) and others for [Enki](http://enkiblog.com) (the reason this was originally written)
 * [Matthew Moore](http://www.matthewpaulmoore.com/) for helpful suggestions and for submitting it to the official list of Gravatar implementations.
 * [Vincent Charles](http://vincentcharles.com/) For some documentation in a previous version.
 
-
-License
--------
+## License
 
 Copyright (c) 2009 Chris Lloyd.
 
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-'Software'), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
