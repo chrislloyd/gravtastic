@@ -4,6 +4,8 @@
 
 In less than 5 minutes you can add Gravatars to your Ruby project. It works in Rails, Merb _and_ plain ol' Ruby.
 
+The best way to learn more about Gravtastic is to [look at the source](http://github.com/chrislloyd/gravtastic/blob/master/lib/gravtastic.rb). It's one file, about 80 LOC and really pretty simple. If that isn't for you, then follow the instructions below!
+
 ## Install
 
     sudo gem install gravtastic
@@ -36,6 +38,8 @@ That will show R rated Gravatars over a secure connection. If you find yourself 
 
 Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, you arn't locked into these defaults (you can override them by passing options to `#gravatar_url` like before).
 
+_Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both mean the same._
+
 ### Plain Ruby
 
 So you just have a regular ol' Ruby app? No Rails and ActiveRecord?
@@ -48,7 +52,7 @@ So you just have a regular ol' Ruby app? No Rails and ActiveRecord?
 
 And wallah! That works exactly the same as in Rails! Now all instances of the BoringUser class will have `#gravatar_url` methods.
 
-_Note: the `#gravatar_url` methods don't get included until you specify the calss `is_gravtastic!`_
+_Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
 
 ### Complete List of Options
 
