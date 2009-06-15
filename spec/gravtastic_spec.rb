@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/spec_helper'
-require 'gravtastic'
+require File.dirname(__FILE__) + '/../lib/gravtastic'
 
 describe Gravtastic do
 
@@ -63,6 +63,10 @@ describe Gravtastic do
 
     it "makes a saucy URL" do
       @user.gravatar_url(:rating => 'R').should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R'
+    end
+
+    it "abides to some new fancy feature" do
+      @user.gravatar_url(:extreme => true).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?extreme=true&r=PG'
     end
 
     it "makes a URL from the defaults" do
