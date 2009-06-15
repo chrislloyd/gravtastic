@@ -44,6 +44,14 @@ module Gravtastic
       @gravatar_defaults
     end
 
+    def gravatar_options
+      {
+        :size => 's',
+        :default => 'd',
+        :rating => 'r'
+      }
+    end
+
   end
 
   module InstanceMethods
@@ -62,9 +70,8 @@ module Gravtastic
   private
 
     def url_params_from_hash(hash)
-      '?' + hash.map do |pair|
-        pair[0] = pair[0].to_s[0,1]
-        pair.map{|item| item = CGI::escape(item.to_s) }.join('=')
+      '?' + hash.map do |key, val|
+        [self.class.gravatar_options(key.to_sym) || key.to_s, CGI::escape(val.to_s) ].join('=')
       end.sort.join('&')
     end
 
