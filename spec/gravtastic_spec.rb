@@ -66,12 +66,12 @@ describe Gravtastic do
     end
 
     it "abides to some new fancy feature" do
-      @user.gravatar_url(:extreme => true).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?extreme=true&r=PG'
+      @user.gravatar_url(:extreme => true).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?extreme=true&amp;r=PG'
     end
 
     it "makes a URL from the defaults" do
       stub(@user.class).gravatar_defaults{ {:size => 20, :rating => 'R18', :secure => true, :filetype => :png} }
-      @user.gravatar_url.should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R18&s=20'
+      @user.gravatar_url.should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R18&amp;s=20'
     end
 
   end

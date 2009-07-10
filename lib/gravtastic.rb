@@ -72,7 +72,7 @@ module Gravtastic
     def url_params_from_hash(hash)
       '?' + hash.map do |key, val|
         [self.class.gravatar_options[key.to_sym] || key.to_s, CGI::escape(val.to_s) ].join('=')
-      end.sort.join('&')
+      end.sort.join('&amp;')
     end
 
     def gravatar_hostname(secure)
