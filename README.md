@@ -104,8 +104,9 @@ Fork the project, submit a pull request and I'll get to it straight away. Or you
 ## Thanks
 
 * [Xavier Shay](http://rhnh.net) and others for [Enki](http://enkiblog.com) (the reason this was originally written)
-* [Matthew Moore](http://www.matthewpaulmoore.com/) for helpful suggestions and for submitting it to the official list of Gravatar implementations.
-* [Vincent Charles](http://vincentcharles.com/) For some documentation in a previous version.
+* [Matthew Moore](http://www.matthewpaulmoore.com)
+* [Vincent Charles](http://vincentcharles.com)
+* [Paul Farnell](http://litmusapp.com/blog)
 
 ## License
 
