@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/spec_helper'
 require 'rubygems'
 
-require 'activerecord'
+require 'active_record'
 # require 'dm-core'
 require 'gravtastic'
 
