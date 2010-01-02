@@ -10,14 +10,12 @@ module Gravtastic
 
   module SingletonMethods
 
-    def is_gravtastic(source = :email, options={})
+    def is_gravtastic(*args)
       extend ClassMethods
       include InstanceMethods
 
-      if source.is_a?(Hash)
-        options = source
-        source = :email
-      end
+      options = args.last.is_a?(Hash) ? args.pop : {}
+      source = args.first || :email
 
       @gravatar_defaults = {
         :rating => 'PG',
@@ -29,7 +27,7 @@ module Gravtastic
 
     alias_method :has_gravatar, :is_gravtastic
     alias_method :is_gravtastic!, :is_gravtastic
-
+    
   end
 
   module ClassMethods
@@ -54,7 +52,11 @@ module Gravtastic
   module InstanceMethods
 
     def gravatar_id
-      Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
+      if send(self.class.gravatar_source).include? '@'
+        Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
+      else
+        send(self.class.gravatar_source)
+      end
     end
 
     def gravatar_url(options={})
