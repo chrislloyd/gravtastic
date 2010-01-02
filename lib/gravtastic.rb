@@ -86,3 +86,4 @@ end
 
 ActiveRecord::Base.send(:include, Gravtastic) if defined?(ActiveRecord) # :nodoc:
 DataMapper::Resource.append_inclusions(Gravtastic) if defined?(DataMapper) # :nodoc:
+MongoMapper::Document.append_inclusions(Gravtastic) if defined?(MongoMapper) && MongoMapper::Document.respond_to?(:append_inclusions) # :nodoc:
