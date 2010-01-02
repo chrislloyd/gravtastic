@@ -8,6 +8,10 @@ module Gravtastic
     base.extend(SingletonMethods)
   end
 
+  def self.version
+    File.read(__FILE__.sub('lib/gravtastic.rb','VERSION')).strip
+  end
+
   module SingletonMethods
 
     def is_gravtastic(*args)
@@ -27,7 +31,7 @@ module Gravtastic
 
     alias_method :has_gravatar, :is_gravtastic
     alias_method :is_gravtastic!, :is_gravtastic
-    
+
   end
 
   module ClassMethods
@@ -52,11 +56,7 @@ module Gravtastic
   module InstanceMethods
 
     def gravatar_id
-      if send(self.class.gravatar_source).include? '@'
-        Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
-      else
-        send(self.class.gravatar_source)
-      end
+      Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
     end
 
     def gravatar_url(options={})
