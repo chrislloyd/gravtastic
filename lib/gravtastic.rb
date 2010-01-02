@@ -34,8 +34,6 @@ module Gravtastic
 
   module ClassMethods
 
-    # attr_reader :gravatar_source, :gravatar_defaults
-
     def gravatar_source
       @gravatar_source
     end
@@ -45,8 +43,7 @@ module Gravtastic
     end
 
     def gravatar_options
-      {
-        :size => 's',
+      { :size => 's',
         :default => 'd',
         :rating => 'r'
       }
