@@ -88,5 +88,6 @@ end
 
 Sequel::Model.send(:include, Gravtastic) if defined?(Sequel) # :nodoc:
 ActiveRecord::Base.send(:include, Gravtastic) if defined?(ActiveRecord) # :nodoc:
+Mongoid::Document.send(:include, Gravtastic) if defined?(Mongoid) # :nodoc:
 DataMapper::Resource.append_inclusions(Gravtastic) if defined?(DataMapper) # :nodoc:
 MongoMapper::Document.append_inclusions(Gravtastic) if defined?(MongoMapper) && MongoMapper::Document.respond_to?(:append_inclusions) # :nodoc:
