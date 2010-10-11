@@ -58,9 +58,12 @@ module Gravtastic
 
     def gravatar_url(options={})
       options = self.class.gravatar_defaults.merge(options)
-      gravatar_hostname(options.delete(:secure)) +
+      path = gravatar_hostname(options.delete(:secure)) +
         gravatar_filename(options.delete(:filetype)) +
         url_params_from_hash(options)
+      
+      # This would be alot cleaner with .try(:html_safe)
+      path.respond_to?(:html_safe) ? path.html_safe : path
     end
 
   private
