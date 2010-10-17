@@ -46,6 +46,7 @@ describe Mongoid do
   it "includes Gravtastic" do
     Class.new do
       include Mongoid::Document
+      include Gravtastic
       is_gravtastic
     end.new.should respond_to(:gravatar_url)
   end
