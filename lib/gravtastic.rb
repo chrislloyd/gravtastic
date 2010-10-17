@@ -90,6 +90,3 @@ end
 
 ActiveRecord::Base.send(:include, Gravtastic) if defined?(ActiveRecord) # :nodoc:
 DataMapper::Model.append_extensions(Gravtastic::ManualConfigure) if defined?(DataMapper) # :nodoc:
-Mongoid::Document.included do
-  include Gravtastic
-end if defined?(Mongoid) # :nodoc:
