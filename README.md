@@ -129,6 +129,7 @@ _Note: the `#gravatar_url` methods don't get included until you specify the clas
     require 'gravtastic'
     class User
       include Mongoid::Document
+      include Gravtastic
       is_gravtastic
     end
 
