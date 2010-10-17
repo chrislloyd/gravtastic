@@ -11,7 +11,6 @@ begin
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Install jeweler to build gem"
 end
 
 require 'spec/rake/spectask'

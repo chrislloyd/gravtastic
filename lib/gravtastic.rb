@@ -4,73 +4,73 @@ require 'uri'
 
 module Gravtastic
 
-  def self.included(base)
-    base.extend(SingletonMethods)
-  end
-
   def self.version
     File.read(__FILE__.sub('lib/gravtastic.rb','VERSION')).strip
   end
+  
+  def self.included(model)
+    model.extend ManualConfigure
+  end
+  
+  def self.apply(model, *args, &blk)
+  end
+  
+  def self.configure(model, *args, &blk)
+    options = args.last.is_a?(Hash) ? args.pop : {}
 
-  module SingletonMethods
+    model.gravatar_defaults = {
+      :rating => 'PG',
+      :secure => false,
+      :filetype => :png
+    }.merge(options)
+    
+    model.gravatar_source = args.first || :email
+  end
 
-    def is_gravtastic(*args)
+  module ManualConfigure
+    def is_gravtastic(*args, &blk)
       extend ClassMethods
       include InstanceMethods
-
-      options = args.last.is_a?(Hash) ? args.pop : {}
-      source = args.first || :email
-
-      @gravatar_defaults = {
-        :rating => 'PG',
-        :secure => false,
-        :filetype => :png
-      }.merge(options)
-      @gravatar_source = source
+      Gravtastic.configure(self, *args, &blk)
+      self
     end
 
     alias_method :has_gravatar, :is_gravtastic
     alias_method :is_gravtastic!, :is_gravtastic
-
   end
 
   module ClassMethods
+    attr_accessor :gravatar_source, :gravatar_defaults
 
-    def gravatar_source
-      @gravatar_source
-    end
-
-    def gravatar_defaults
-      @gravatar_defaults
-    end
-
-    def gravatar_options
+    def gravatar_abbreviations
       { :size => 's',
         :default => 'd',
         :rating => 'r'
       }
     end
-
   end
 
   module InstanceMethods
-
+    
     def gravatar_id
       Digest::MD5.hexdigest(send(self.class.gravatar_source).to_s.downcase)
     end
 
     def gravatar_url(options={})
       options = self.class.gravatar_defaults.merge(options)
-      gravatar_hostname(options.delete(:secure)) +
+      path = gravatar_hostname(options.delete(:secure)) +
         gravatar_filename(options.delete(:filetype)) +
         url_params_from_hash(options)
+      
+      # This would be alot cleaner with .try(:html_safe)
+      path.respond_to?(:html_safe) ? path.html_safe : path
     end
 
   private
 
     def url_params_from_hash(hash)
       '?' + hash.map do |key, val|
-        [self.class.gravatar_options[key.to_sym] || key.to_s, CGI::escape(val.to_s) ].join('=')
+        [self.class.gravatar_abbreviations[key.to_sym] || key.to_s, CGI::escape(val.to_s) ].join('=')
       end.sort.join('&amp;')
     end
 
@@ -81,13 +81,15 @@ module Gravtastic
     def gravatar_filename(filetype)
       "#{gravatar_id}.#{filetype}"
     end
-
   end
 
 end
 
-Sequel::Model.send(:include, Gravtastic) if defined?(Sequel) # :nodoc:
+# All these ORMs suck balls. See Sequel or MongoMapper for examples of good
+# plugin systems.
+
 ActiveRecord::Base.send(:include, Gravtastic) if defined?(ActiveRecord) # :nodoc:
-Mongoid::Document.send(:include, Gravtastic) if defined?(Mongoid) # :nodoc:
-DataMapper::Resource.append_inclusions(Gravtastic) if defined?(DataMapper) # :nodoc:
-MongoMapper::Document.append_inclusions(Gravtastic) if defined?(MongoMapper) && MongoMapper::Document.respond_to?(:append_inclusions) # :nodoc:
+DataMapper::Model.append_extensions(Gravtastic::ManualConfigure) if defined?(DataMapper) # :nodoc:
+Mongoid::Document.included do
+  include Gravtastic
+end if defined?(Mongoid) # :nodoc:

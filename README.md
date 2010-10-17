@@ -12,9 +12,9 @@ The best way to learn more about Gravtastic is to [look at the source](http://gi
 
 ## Usage
 
-Add this to your `environment.rb`:
+Add this to your `Gemfile`:
 
-    config.gem 'gravtastic', :version => '>= 2.1.0'
+    gem 'gravtastic'
 
 Next, say that you want a Gravatar for your model:
 
@@ -39,20 +39,6 @@ That will show R rated Gravatars over a secure connection. If you find yourself 
 Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, you arn't locked into these defaults (you can override them by passing options to `#gravatar_url` like before).
 
 _Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both do the same thing._
-
-### Plain Ruby
-
-So you just have a regular ol' Ruby app? No Rails and ActiveRecord?
-
-    require 'gravtastic'
-    class BoringUser
-      include Gravtastic
-      is_gravtastic!
-    end
-
-And wallah! That works exactly the same as in Rails! Now all instances of the BoringUser class will have `#gravatar_url` methods.
-
-_Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
 
 ### Complete List of Options
 
@@ -95,6 +81,58 @@ _Note: the `#gravatar_url` methods don't get included until you specify the clas
   </tr>
 </table>
 
+## Other ORM
+
+### Plain Ruby
+
+So you just have a regular ol' Ruby app? No Rails and ActiveRecord?
+
+    require 'gravtastic'
+    class BoringUser
+      include Gravtastic
+      is_gravtastic!
+    end
+
+And wallah! That works exactly the same as in Rails! Now all instances of the BoringUser class will have `#gravatar_url` methods.
+
+_Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
+
+### DataMapper
+
+    require 'dm-core'
+    require 'gravtastic'
+    class User
+      include DataMapper::Resource
+      is :gravtastic
+    end
+
+### Sequel
+
+    require 'sequel'
+    require 'gravtastic'
+    class User < Sequel::Model
+      plugin Gravtastic
+    end
+
+### MongoMapper
+
+    require 'mongo_mapper'
+    require 'gravtastic'
+    class User
+      include MongoMapper::Document
+      plugin Gravtastic
+    end
+
+### Mongoid
+
+    require 'mongoid'
+    require 'gravtastic'
+    class User
+      include Mongoid::Document
+      is_gravtastic
+    end
+
+
 ## Making Changes Yourself
 
 Fork the project, submit a pull request and I'll get to it straight away. Or you can just view the source like:
@@ -104,10 +142,14 @@ Fork the project, submit a pull request and I'll get to it straight away. Or you
 ## Thanks
 
 * [Xavier Shay](http://rhnh.net) and others for [Enki](http://enkiblog.com) (the reason this was originally written)
-* [Matthew Moore](http://www.matthewpaulmoore.com)
-* [Vincent Charles](http://vincentcharles.com)
-* [Paul Farnell](http://litmusapp.com/blog)
-* [Jeff Kreeftmeijer](http://jeffkreeftmeijer.nl/)
+* [Matthew Moore](http://github.com/moorage)
+* [Galen O'Hanlon](http://github.com/gohanlon)
+* [Jason Cheow](http://jasoncheow.com)
+* [Paul Farnell](http://github.com/salted)
+* [Jeff Kreeftmeijer](http://github.com/jeffkreeftmeijer)
+* [Ryan Lewis](http://github.com/c00lryguy)
+* [Arthur Chiu](http://github.com/achiu)
+
 
 ## License
 
