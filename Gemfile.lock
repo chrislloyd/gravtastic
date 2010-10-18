@@ -1,0 +1,31 @@
+PATH
+  remote: ~/src/rocco
+  specs:
+    rocco (0.5)
+      mustache
+      rdiscount
+
+GEM
+  specs:
+    diff-lcs (1.1.2)
+    mustache (0.11.2)
+    rdiscount (1.6.5)
+    rr (1.0.0)
+    rspec (2.0.0)
+      rspec-core (= 2.0.0)
+      rspec-expectations (= 2.0.0)
+      rspec-mocks (= 2.0.0)
+    rspec-core (2.0.0)
+    rspec-expectations (2.0.0)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0)
+      rspec-core (= 2.0.0)
+      rspec-expectations (= 2.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rocco!
+  rr
+  rspec
