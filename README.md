@@ -17,6 +17,7 @@ The best way to learn more about Gravtastic is to [look through the annotated so
 
     sudo gem install gravtastic
 
+
 ## Usage
 
 For this example I'm going to assume you are using Rails. Don't worry if you arn't, the concepts are still the same.
@@ -29,10 +30,10 @@ Next, in your model:
 
     class User < ActiveRecord::Base
       include Gravtastic
-      is_gravtastic
+      gravtastic
     end
 
-<small>_Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both do the same thing._</small>
+<small>_Note: You can use either `is_gravtastic!`, `is_gravtastic` or `has_gravatar`, they all do the same thing._</small>
 
 And you are done! In your views you can now use the `#gravatar_url` method on instances of `User`:
 
@@ -44,7 +45,7 @@ Gravatar gives you some options. You can use them like this:
 
 That will show R rated Gravatars over a secure connection. If you find yourself using the same options over and over again, you can set the Gravatar defaults. In your model, just change the `is_gravtastic` line to something like this:
 
-    is_gravtastic :secure => true,
+    gravtastic :secure => true,
                   :filetype => :gif,
                   :size => 120
 
@@ -52,7 +53,7 @@ Now all your Gravatars will come from a secure connection, be a GIF and be 120x1
 
 Gravatar needs an email address to find the person's avatar. By default, Gravtastic calls the `#email` method to find this. You can customise this.
 
-    is_gravtastic :author_email
+    gravtastic :author_email
 
 ### Defaults
 
