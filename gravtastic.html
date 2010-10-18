@@ -1,0 +1,80 @@
+<!DOCTYPE html>  <html> <head>   <title>gravtastic.rb</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               gravtastic.rb             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-1">#</a>               </div>               <p>Gravtastic is a small module which quickly generates a Gravatar URL. Just
+include in your class!</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-2">#</a>               </div>               <p>Gravatar uses an MD5 hash of the users email to locate their avatar.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;digest/md5&#39;</span>
+<span class="nb">require</span> <span class="s1">&#39;gravtastic/version&#39;</span>
+
+<span class="k">module</span> <span class="nn">Gravtastic</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-3">#</a>               </div>               <p>When you <code>include Gravtastic</code>, Ruby automatically calls this method
+with the class you called it in. It allows us extend the class with the
+<code>#gravtastic</code> method.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">included</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">extend</span> <span class="no">StageOne</span>
+  <span class="k">end</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-4">#</a>               </div>               <p>Sets the model's default attributes. It is called when you use 
+<code>#gravtastic</code> in your model.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">configure</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blk</span><span class="p">)</span>
+    <span class="n">options</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="no">Hash</span><span class="p">)</span> <span class="p">?</span> <span class="n">args</span><span class="o">.</span><span class="n">pop</span> <span class="p">:</span> <span class="p">{}</span>
+
+    <span class="n">model</span><span class="o">.</span><span class="n">gravatar_defaults</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">:rating</span> <span class="o">=&gt;</span> <span class="s1">&#39;PG&#39;</span><span class="p">,</span>
+      <span class="ss">:secure</span> <span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+      <span class="ss">:filetype</span> <span class="o">=&gt;</span> <span class="ss">:png</span>
+    <span class="p">}</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-5">#</a>               </div>               <p>The method where Gravtastic get the users' email from defaults to <code>#email</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="n">model</span><span class="o">.</span><span class="n">gravatar_source</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">first</span> <span class="o">||</span> <span class="ss">:email</span>
+  <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-6">#</a>               </div>               <p>We include Gravtastic in multiple stages. This is mainly so that if you 
+include Gravastic in a superclass (something like <code>ActiveRecord::Base</code>) 
+then it only adds the relevant methods to the classes which <em>actually</em> use 
+it.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">module</span> <span class="nn">StageOne</span>
+    <span class="k">def</span> <span class="nf">gravtastic</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blk</span><span class="p">)</span>
+      <span class="kp">extend</span> <span class="no">ClassMethods</span>
+      <span class="kp">include</span> <span class="no">InstanceMethods</span>
+      <span class="no">Gravtastic</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="nb">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">blk</span><span class="p">)</span>
+      <span class="nb">self</span>
+    <span class="k">end</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-7">#</a>               </div>               <p>All these aliases deal with pervious bad design decisions. Let that be a 
+lesson, name things simply, try not to follow fads and try not to break 
+backwards compatibility.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="n">alias_method</span> <span class="ss">:gravtastic!</span><span class="p">,</span>    <span class="ss">:gravtastic</span>
+    <span class="n">alias_method</span> <span class="ss">:has_gravatar</span><span class="p">,</span>   <span class="ss">:gravtastic</span>
+    <span class="n">alias_method</span> <span class="ss">:is_gravtastic</span><span class="p">,</span>  <span class="ss">:gravtastic</span>
+    <span class="n">alias_method</span> <span class="ss">:is_gravtastic!</span><span class="p">,</span> <span class="ss">:gravtastic</span>
+  <span class="k">end</span>
+
+  <span class="k">module</span> <span class="nn">ClassMethods</span>
+    <span class="kp">attr_accessor</span> <span class="ss">:gravatar_source</span><span class="p">,</span> <span class="ss">:gravatar_defaults</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-8">#</a>               </div>               <p>Gravtastic abbreviates certain params so that it produces the smallest
+possible URL. Every byte counts.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">gravatar_abbreviations</span>
+      <span class="p">{</span> <span class="ss">:size</span> <span class="o">=&gt;</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span>
+        <span class="ss">:default</span> <span class="o">=&gt;</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span>
+        <span class="ss">:rating</span> <span class="o">=&gt;</span> <span class="s1">&#39;r&#39;</span>
+      <span class="p">}</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">module</span> <span class="nn">InstanceMethods</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-9">#</a>               </div>               <p>The raw MD5 hash of the users' email. Gravatar is particularly tricky as
+it downcases all emails. This is really the guts of the module, 
+everything else is just convenience.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">gravatar_id</span>
+      <span class="no">Digest</span><span class="o">::</span><span class="no">MD5</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(</span><span class="nb">send</span><span class="p">(</span><span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">gravatar_source</span><span class="p">)</span><span class="o">.</span><span class="n">to_s</span><span class="o">.</span><span class="n">downcase</span><span class="p">)</span>
+    <span class="k">end</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-10">#</a>               </div>               <p>Constructs the full Gravatar url.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">gravatar_url</span><span class="p">(</span><span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+      <span class="n">options</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">gravatar_defaults</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+      <span class="n">gravatar_hostname</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:secure</span><span class="p">))</span> <span class="o">+</span>
+        <span class="n">gravatar_filename</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="ss">:filetype</span><span class="p">))</span> <span class="o">+</span>
+        <span class="n">url_params_from_hash</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+    <span class="k">end</span>
+
+  <span class="kp">private</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-11">#</a>               </div>               <p>Creates a params hash like "?foo=bar" from a hash like {'foo' => 'bar'}.
+The values are sorted so it produces deterministic output (and can 
+therefore be tested easily).</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">url_params_from_hash</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+      <span class="s1">&#39;?&#39;</span> <span class="o">+</span> <span class="nb">hash</span><span class="o">.</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="o">|</span>
+        <span class="o">[</span><span class="nb">self</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">gravatar_abbreviations</span><span class="o">[</span><span class="n">key</span><span class="o">.</span><span class="n">to_sym</span><span class="o">]</span> <span class="o">||</span> <span class="n">key</span><span class="o">.</span><span class="n">to_s</span><span class="p">,</span> <span class="n">val</span><span class="o">.</span><span class="n">to_s</span> <span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+      <span class="k">end</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;&amp;&#39;</span><span class="p">)</span>
+    <span class="k">end</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-12">#</a>               </div>               <p>Returns either Gravatar's secure hostname or not.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">gravatar_hostname</span><span class="p">(</span><span class="n">secure</span><span class="p">)</span>
+      <span class="s1">&#39;http&#39;</span> <span class="o">+</span> <span class="p">(</span><span class="n">secure</span> <span class="p">?</span> <span class="s1">&#39;s://secure.&#39;</span> <span class="p">:</span> <span class="s1">&#39;://&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;gravatar.com/avatar/&#39;</span>
+    <span class="k">end</span>
+    </pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="octowrap">                 <a class="octothorpe" href="#section-13">#</a>               </div>               <p>Munges the ID and the filetype into one. Like "abc123.png"</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">gravatar_filename</span><span class="p">(</span><span class="n">filetype</span><span class="p">)</span>
+      <span class="s2">&quot;</span><span class="si">#{</span><span class="n">gravatar_id</span><span class="si">}</span><span class="s2">.</span><span class="si">#{</span><span class="n">filetype</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+<span class="k">end</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
