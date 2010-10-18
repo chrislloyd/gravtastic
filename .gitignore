@@ -1,6 +1,2 @@
-coverage
-html
+docs
 pkg
-doc
-.ditz-config
-dist
