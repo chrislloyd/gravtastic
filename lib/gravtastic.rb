@@ -9,10 +9,7 @@ module Gravtastic
   end
   
   def self.included(model)
-    model.extend ManualConfigure
-  end
-  
-  def self.apply(model, *args, &blk)
+    model.extend StageOne
   end
   
   def self.configure(model, *args, &blk)
@@ -27,7 +24,7 @@ module Gravtastic
     model.gravatar_source = args.first || :email
   end
 
-  module ManualConfigure
+  module StageOne
     def is_gravtastic(*args, &blk)
       extend ClassMethods
       include InstanceMethods
@@ -58,20 +55,17 @@ module Gravtastic
 
     def gravatar_url(options={})
       options = self.class.gravatar_defaults.merge(options)
-      path = gravatar_hostname(options.delete(:secure)) +
+      gravatar_hostname(options.delete(:secure)) +
         gravatar_filename(options.delete(:filetype)) +
         url_params_from_hash(options)
-      
-      # This would be alot cleaner with .try(:html_safe)
-      path.respond_to?(:html_safe) ? path.html_safe : path
     end
 
   private
 
     def url_params_from_hash(hash)
       '?' + hash.map do |key, val|
-        [self.class.gravatar_abbreviations[key.to_sym] || key.to_s, CGI::escape(val.to_s) ].join('=')
-      end.sort.join('&amp;')
+        [self.class.gravatar_abbreviations[key.to_sym] || key.to_s, val.to_s ].join('=')
+      end.sort.join('&')
     end
 
     def gravatar_hostname(secure)
@@ -84,12 +78,3 @@ module Gravtastic
   end
 
 end
-
-# All these ORMs suck balls. See Sequel or MongoMapper for examples of good
-# plugin systems.
-
-ActiveRecord::Base.send(:include, Gravtastic) if defined?(ActiveRecord) # :nodoc:
-DataMapper::Model.append_extensions(Gravtastic::ManualConfigure) if defined?(DataMapper) # :nodoc:
-Mongoid::Document.included do
-  include Gravtastic
-end if defined?(Mongoid) # :nodoc:
