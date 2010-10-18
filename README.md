@@ -1,10 +1,17 @@
-# Gravtastic
+                  _____                 _            _   _
+                 / ____|               | |          | | (_)
+                | |  __ _ __ __ ___   _| |_ __ _ ___| |_ _  ___
+                | | |_ | '__/ _` \ \ / / __/ _` / __| __| |/ __|
+                | |__| | | | (_| |\ V /| || (_| \__ \ |_| | (__
+                 \_____|_|  \__,_| \_/  \__\__,_|___/\__|_|\___|
 
-<small>The super fantastic way of getting Gravatars. By [Chris](http://chrislloyd.com.au).</small>
 
-In less than 5 minutes you can add Gravatars to your Ruby project. It works in Rails, Merb _and_ plain ol' Ruby.
+<center><small>The super fantastic way of getting Gravatars. By [The Poacher](http://thelincolnshirepoacher.com).</small></center>
 
-The best way to learn more about Gravtastic is to [look at the source](http://github.com/chrislloyd/gravtastic/blob/master/lib/gravtastic.rb). It's one file, about 80 LOC and really pretty simple. If that isn't for you, then follow the instructions below!
+In less than a minute you can add Gravatars to your Ruby project. It works in Rails, Merb & Sinatra.
+
+The best way to learn more about Gravtastic is to [look through the annotated source](http://chrislloyd.github.com/gravtastic). It's one file, about 80 LOC and really pretty simple. If that isn't for you, then follow the instructions below!
+
 
 ## Install
 
@@ -12,38 +19,51 @@ The best way to learn more about Gravtastic is to [look at the source](http://gi
 
 ## Usage
 
-Add this to your `Gemfile`:
+For this example I'm going to assume you are using Rails. Don't worry if you arn't, the concepts are still the same.
+
+First off, add this to your `Gemfile`:
 
     gem 'gravtastic'
 
-Next, say that you want a Gravatar for your model:
+Next, in your model:
 
     class User < ActiveRecord::Base
-      is_gravtastic!
+      include Gravtastic
+      is_gravtastic
     end
 
-And you are done! In your views you can now use the `#gravatar_url` method:
+<small>_Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both do the same thing._</small>
+
+And you are done! In your views you can now use the `#gravatar_url` method on instances of `User`:
 
     <%= image_tag @user.gravatar_url %>
 
-If you want to change the image, you can do this:
+Gravatar gives you some options. You can use them like this:
 
     <%= image_tag @user.gravatar_url(:rating => 'R', :secure => true) %>
 
-That will show R rated Gravatars over a secure connection. If you find yourself repeating that all around your app, you can set the Gravatar defaults. In your model, just change the `is_gravtastic!` line to something like this:
+That will show R rated Gravatars over a secure connection. If you find yourself using the same options over and over again, you can set the Gravatar defaults. In your model, just change the `is_gravtastic` line to something like this:
 
-    is_gravtastic :author_email, :secure => true,
-                                 :filetype => :gif,
-                                 :size => 120
+    is_gravtastic :secure => true,
+                  :filetype => :gif,
+                  :size => 120
 
-Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px. The email will also come from the `author_email` field, not the default `email` field. Don't worry, you arn't locked into these defaults (you can override them by passing options to `#gravatar_url` like before).
+Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px.
 
-_Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both do the same thing._
+Gravatar needs an email address to find the person's avatar. By default, Gravtastic calls the `#email` method to find this. You can customise this.
+
+    is_gravtastic :author_email
+
+### Defaults
+
+A common question is "how do I detect wether the user has an avatar or not?" People usually write code to perform a HTTP request to Gravatar to see wether the gravatar exists. This is certainly a solution, but not a very good one. If you have page where you show 50 users, the client will have to wait for 50 HTTP requests before they even get the page. Slooww.
+
+The best way to do this is to set the `:default` option when using `#gravatr_url`. If the user doesn't have an avatar, Gravatar essentially redirects to the "default" url you provide.
 
 ### Complete List of Options
 
-<table>
-  <tr>
+<table width="100%">
+  <thead>
     <th>Option</th>
     <th>Description</th>
     <th>Default</th>
@@ -65,7 +85,7 @@ _Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both do the 
     <td><b>default</b></td>
     <td>The default avatar image</td>
     <td><i>none</i></td>
-    <td>Any URL, or "identicon", "monsterid", "wavatar"</td>
+    <td>"identicon", "monsterid", "wavatar" or an absolute URL.</td>
   </tr>
   <tr>
     <td><b>rating</b></td>
@@ -81,67 +101,43 @@ _Note: You can use either `is_gravtastic!` or `is_gravtastic`, they both do the 
   </tr>
 </table>
 
-## Other ORM
 
-### Plain Ruby
+### Other ORMs
 
-So you just have a regular ol' Ruby app? No Rails and ActiveRecord?
+Gravatar is really just simple Ruby. There is no special magic which ties it to one ORM (like ActiveRecord or MongoMapper). You can use the following pattern to include it anywhere:
 
     require 'gravtastic'
-    class BoringUser
+    class MyClass
       include Gravtastic
-      is_gravtastic!
-    end
-
-And wallah! That works exactly the same as in Rails! Now all instances of the BoringUser class will have `#gravatar_url` methods.
-
-_Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
-
-### DataMapper
-
-    require 'dm-core'
-    require 'gravtastic'
-    class User
-      include DataMapper::Resource
-      is :gravtastic
-    end
-
-### Sequel
-
-    require 'sequel'
-    require 'gravtastic'
-    class User < Sequel::Model
-      plugin Gravtastic
-    end
-
-### MongoMapper
-
-    require 'mongo_mapper'
-    require 'gravtastic'
-    class User
-      include MongoMapper::Document
-      plugin Gravtastic
-    end
-
-### Mongoid
-
-    require 'mongoid'
-    require 'gravtastic'
-    class User
-      include Mongoid::Document
       is_gravtastic
     end
+
+For instance, with the excellent [MongoMapper](http://github.com/jnunemaker/mongomapper) you can use do this:
+
+    class Person
+      include MongoMapper::Document
+      include Gravtastic
+
+      is_gravtastic
+
+      key :email
+    end
+
+And wallah! It's exactly the same as with ActiveRecord! Now all instances of the `Person` class will have `#gravatar_url` methods.
+
+_Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
 
 
 ## Making Changes Yourself
 
-Fork the project, submit a pull request and I'll get to it straight away. Or you can just view the source like:
+Gravtastic is a mature project. There isn't any active work which needs to be done on it, but I do continue to maintain it. Just don't expect same day fixes. If you find something that needs fixing, the best way to contribute is to fork the repo and submit a pull request.
 
     git clone git://github.com/chrislloyd/gravtastic.git
 
+
 ## Thanks
 
-* [Xavier Shay](http://rhnh.net) and others for [Enki](http://enkiblog.com) (the reason this was originally written)
+* [Xavier Shay](http://github.com/xaviershay) and others for [Enki](http://enkiblog.com) (the reason this was originally written)
 * [Matthew Moore](http://github.com/moorage)
 * [Galen O'Hanlon](http://github.com/gohanlon)
 * [Jason Cheow](http://jasoncheow.com)
