@@ -5,6 +5,8 @@ describe Gravtastic do
       c.send(:include, Gravtastic)
       c.is_gravtastic
     end
+    Gravtastic.gravatar_defaults({:rating => 'PG', :secure => false, :filetype => :png})
+    
   end
 
   describe ".is_gravtastic" do
@@ -23,6 +25,28 @@ describe Gravtastic do
 
     it "source is :email" do
       @g.gravatar_source.should == :email
+    end
+
+  end
+
+  describe "changed default" do
+
+    it "options are {:rating => 'EE', :secure => true, :filetype => :jpg}" do
+      Gravtastic.gravatar_defaults({:rating => 'EE', :secure => true, :filetype => :jpg})
+
+      @g = Class.new do |c|
+        c.send(:include, Gravtastic)
+        c.is_gravtastic
+      end
+
+      @k = Class.new do |c|
+        c.send(:include, Gravtastic)
+        c.is_gravtastic
+      end
+      
+      @g.gravatar_defaults.should == {:rating => 'EE', :secure => true, :filetype => :jpg}
+      @k.gravatar_defaults.should == {:rating => 'EE', :secure => true, :filetype => :jpg}
+      @g.gravatar_defaults.should == @k.gravatar_defaults
     end
 
   end

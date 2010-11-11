@@ -7,6 +7,16 @@ require 'gravtastic/version'
 
 module Gravtastic
   
+  @@gravatar_defaults = {
+      :rating => 'PG',
+      :secure => false,
+      :filetype => :png
+    } 
+  
+  def self.gravatar_defaults(hash = {})
+    @@gravatar_defaults = hash || @@gravatar_defaults
+  end
+
   # When you `include Gravtastic`, Ruby automatically calls this method
   # with the class you called it in. It allows us extend the class with the
   # `#gravtastic` method.
@@ -19,11 +29,7 @@ module Gravtastic
   def self.configure(model, *args, &blk)
     options = args.last.is_a?(Hash) ? args.pop : {}
 
-    model.gravatar_defaults = {
-      :rating => 'PG',
-      :secure => false,
-      :filetype => :png
-    }.merge(options)
+    model.gravatar_defaults = @@gravatar_defaults.merge(options)
     
     # The method where Gravtastic get the users' email from defaults to `#email`.
     model.gravatar_source = args.first || :email
