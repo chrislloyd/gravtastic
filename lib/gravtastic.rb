@@ -7,6 +7,10 @@ require 'gravtastic/version'
 
 module Gravtastic
 
+  #You can cofigure your gravatar defaults and source
+  #So every class gravtastic will folow this default
+  #Gravtastic.gravatar_defaults = {:rating => 'EE', :secure => true, :filetype => :jpg}
+  #Gravtastic.gravatar_source = :custom_field
   @@gravatar_defaults = {
       :rating => 'PG',
       :secure => false,
