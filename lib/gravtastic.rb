@@ -6,15 +6,21 @@ require 'digest/md5'
 require 'gravtastic/version'
 
 module Gravtastic
-  
+
   @@gravatar_defaults = {
       :rating => 'PG',
       :secure => false,
       :filetype => :png
     } 
-  
-  def self.gravatar_defaults(hash = {})
+
+  def self.gravatar_defaults=(hash = {})
     @@gravatar_defaults = hash || @@gravatar_defaults
+  end
+
+  @@gravatar_source = :email
+  
+  def self.gravatar_source=(source)
+    @@gravatar_source = source || @@gravatar_source    
   end
 
   # When you `include Gravtastic`, Ruby automatically calls this method
@@ -32,7 +38,7 @@ module Gravtastic
     model.gravatar_defaults = @@gravatar_defaults.merge(options)
     
     # The method where Gravtastic get the users' email from defaults to `#email`.
-    model.gravatar_source = args.first || :email
+    model.gravatar_source = args.first || @@gravatar_source
   end
 
   # We include Gravtastic in multiple stages. This is mainly so that if you 

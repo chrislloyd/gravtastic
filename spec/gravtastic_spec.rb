@@ -1,12 +1,12 @@
 describe Gravtastic do
 
   before(:each) do
+    Gravtastic.gravatar_defaults = {:rating => 'PG', :secure => false, :filetype => :png}
+    Gravtastic.gravatar_source = :email 
     @g = Class.new do |c|
       c.send(:include, Gravtastic)
       c.is_gravtastic
     end
-    Gravtastic.gravatar_defaults({:rating => 'PG', :secure => false, :filetype => :png})
-    
   end
 
   describe ".is_gravtastic" do
@@ -32,9 +32,11 @@ describe Gravtastic do
   describe "changed default" do
 
     it "options are {:rating => 'EE', :secure => true, :filetype => :jpg}" do
-      Gravtastic.gravatar_defaults({:rating => 'EE', :secure => true, :filetype => :jpg})
+      Gravtastic.gravatar_defaults = {:rating => 'EE', :secure => true, :filetype => :jpg}
+      Gravtastic.gravatar_source = :custom_field
 
       @g = Class.new do |c|
+        attr_accessor :custom_field
         c.send(:include, Gravtastic)
         c.is_gravtastic
       end
@@ -47,6 +49,10 @@ describe Gravtastic do
       @g.gravatar_defaults.should == {:rating => 'EE', :secure => true, :filetype => :jpg}
       @k.gravatar_defaults.should == {:rating => 'EE', :secure => true, :filetype => :jpg}
       @g.gravatar_defaults.should == @k.gravatar_defaults
+
+      @g.gravatar_source.should == :custom_field
+      @k.gravatar_source.should == :custom_field
+      @g.gravatar_source.should == @k.gravatar_source
     end
 
   end
