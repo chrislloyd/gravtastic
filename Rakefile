@@ -18,7 +18,6 @@ Rake::GemPackageTask.new(@spec) do |t|
 end
 CLEAN.add 'pkg'
 
-require 'spec/rake/spectask'
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = ['--color', '--require ./spec/helper']
   # t.files = FileList['spec/*.rb']
