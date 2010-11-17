@@ -55,6 +55,13 @@ Gravatar needs an email address to find the person's avatar. By default, Gravtas
 
     gravtastic :author_email
 
+You can also set the default gravatar options and source, this is useful when you are working with a lot of models/class and want the same configuration:
+
+    Gravtastic.gravatar_defaults = {:rating => 'X', :secure => true, :filetype => :jpg}
+    Gravtastic.gravatar_source = :custom_field
+
+And then all gravtastic models/class will follow this default.
+
 ### Defaults
 
 A common question is "how do I detect wether the user has an avatar or not?" People usually write code to perform a HTTP request to Gravatar to see wether the gravatar exists. This is certainly a solution, but not a very good one. If you have page where you show 50 users, the client will have to wait for 50 HTTP requests before they even get the page. Slooww.
