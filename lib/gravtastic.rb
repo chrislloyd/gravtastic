@@ -4,6 +4,8 @@
 # Gravatar uses an MD5 hash of the users email to locate their avatar.
 require 'digest/md5'
 require 'gravtastic/version'
+require 'net/http'
+require 'uri'
 
 module Gravtastic
   
@@ -79,7 +81,14 @@ module Gravtastic
         gravatar_filename(options.delete(:filetype)) +
         url_params_from_hash(options)
     end
-
+    
+    # Detects if the user has gravatar by sending HTTP request
+    def has_gravatar?
+      url = URI.parse(gravatar_url({:d => '404'}))
+      Net::HTTP.start(url.host, url.port) do |http|
+        return http.head(url.request_uri).code == "200"
+      end
+    end
   private
     
     # Creates a params hash like "?foo=bar" from a hash like {'foo' => 'bar'}.
