@@ -41,7 +41,7 @@ module Gravtastic
       self
     end
     
-    # All these aliases deal with pervious bad design decisions. Let that be a 
+    # All these aliases deal with previous bad design decisions. Let that be a 
     # lesson, name things simply, try not to follow fads and try not to break 
     # backwards compatibility.
     alias_method :gravtastic!,    :gravtastic
