@@ -20,7 +20,7 @@ The best way to learn more about Gravtastic is to [look through the annotated so
 
 ## Usage
 
-For this example I'm going to assume you are using Rails. Don't worry if you arn't, the concepts are still the same.
+For this example I'm going to assume you are using Rails. Don't worry if you aren't, the concepts are still the same.
 
 First off, add this to your `Gemfile`:
 
