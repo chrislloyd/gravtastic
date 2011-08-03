@@ -73,7 +73,7 @@ The best way to do this is to set the `:default` option when using `#gravatr_url
   <tr>
     <td><b>secure</b></td>
     <td>Gravatar transmitted with SSL</td>
-    <td>false</td>
+    <td>true</td>
     <td>true/false</td>
   </tr>
   <tr>
@@ -129,6 +129,24 @@ And wallah! It's exactly the same as with ActiveRecord! Now all instances of the
 _Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
 
 
+## Javascript
+
+_Note: this feature requires Rails 3.1 & CoffeeScript._
+
+Web applications are increasingly performing client side rendering in Javascript. It's not always practical or clean to calculate the `gravatar_url` on the server. As of version 3.2, Gravtastic comes bundled with Javascript helpers.
+
+If you are using Rails 3.1 you can simple require Gravtastic in your `Gemfile` and add
+
+    //= require gravtastic
+
+in your `application.js` file. This will include a function, `Gravtastic` which performs similarly to `gravtastic_url`.
+
+    > Gravtastic('christopher.lloyd@gmail.com')
+      "https://secure.gravatar.com/avatar/08f077ea061585744ee080824f5a8e65.png?r=PG"
+    > Gravtastic('christopher.lloyd@gmail.com', {default: 'identicon', size: 64})
+      "https://secure.gravatar.com/avatar/08f077ea061585744ee080824f5a8e65.png?r=PG&d=identicon&s=64"
+
+
 ## Making Changes Yourself
 
 Gravtastic is a mature project. There isn't any active work which needs to be done on it, but I do continue to maintain it. Just don't expect same day fixes. If you find something that needs fixing, the best way to contribute is to fork the repo and submit a pull request.
@@ -146,6 +164,7 @@ Gravtastic is a mature project. There isn't any active work which needs to be do
 * [Jeff Kreeftmeijer](http://github.com/jeffkreeftmeijer)
 * [Ryan Lewis](http://github.com/c00lryguy)
 * [Arthur Chiu](http://github.com/achiu)
+* [Paul Johnston](http://pajhome.org.uk/crypt/md5/) for his awesome MD5.js implementation.
 
 
 ## License
@@ -157,3 +176,16 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+--
+
+md5.js Copyright (c) 1998 - 2009, Paul Johnston & Contributors
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+Neither the name of the author nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
