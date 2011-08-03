@@ -5,6 +5,12 @@
 require 'digest/md5'
 require 'gravtastic/version'
 
+begin
+  require 'rails'
+  require 'gravtastic/engine'
+rescue LoadError
+end
+
 module Gravtastic
 
   # When you `include Gravtastic`, Ruby automatically calls this method
