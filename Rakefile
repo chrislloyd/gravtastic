@@ -1,4 +1,4 @@
-require 'rake/gempackagetask'
+require 'rubygems/package_task'
 require 'rake/clean'
 require 'rspec/core/rake_task'
 
@@ -12,7 +12,7 @@ end
 
 load(gemspec_file)
 
-Rake::GemPackageTask.new(@spec) do |t|
+Gem::PackageTask.new(@spec) do |t|
   t.need_tar = true
   t.need_zip = true
 end
@@ -21,11 +21,4 @@ CLEAN.add 'pkg'
 require 'spec/rake/spectask'
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = ['--color', '--require ./spec/helper']
-  # t.files = FileList['spec/*.rb']
 end
-
-desc 'Build documentation'
-task :doc do
-  sh 'docco lib/gravtastic.rb'
-end
-CLEAN.add 'docs'
