@@ -11,10 +11,10 @@ window.Gravtastic = (email, options={}) ->
 
   # Initialize options
   opts = {}
-  opts[key] = val for key, val of @constructor.defaults
+  opts[key] = val for key, val of Gravtastic.defaults
   opts[key] = val for key, val of options
 
-  host = if opts.secure?
+  host = if opts.secure
            "https://secure.gravatar.com/avatar"
          else
            "http://gravatar.com/avatar"
@@ -22,7 +22,7 @@ window.Gravtastic = (email, options={}) ->
   path = "/#{id}.#{opts.filetype || 'png'}"
 
   params = "?" + (
-    for key, val of options when key isnt "secure" and key isnt "filetype"
+    for key, val of opts when key isnt "secure" and key isnt "filetype"
       "#{abbreviations[key] || key}=#{val}"
   ).join('&')
 
