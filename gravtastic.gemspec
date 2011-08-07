@@ -1,5 +1,7 @@
 require './lib/gravtastic/version'
 
+YAML::ENGINE.yamler = 'syck'
+
 @spec = Gem::Specification.new do |s|
   s.name    = 'gravtastic'
   s.version = Gravtastic.version
