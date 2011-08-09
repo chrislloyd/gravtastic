@@ -1,3 +1,3 @@
 module Gravtastic
-  Version = VERSION = '3.2.1'
+  Version = VERSION = '3.2.0'
 end
