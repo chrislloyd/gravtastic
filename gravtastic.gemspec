@@ -1,10 +1,8 @@
 require './lib/gravtastic/version'
 
 @spec = Gem::Specification.new do |s|
-  s.platform = Gem::Platform::RUBY
-
   s.name    = 'gravtastic'
-  s.version = Gravtastic::VERSION
+  s.version = Gravtastic.version
   s.date    = '2011-08-03'
 
   s.author   = 'Chris Lloyd'
@@ -19,16 +17,5 @@ require './lib/gravtastic/version'
   s.has_rdoc = false
 
   s.require_path = 'lib'
-  s.files        = %w(README.md Rakefile Gemfile
-    lib/gravtastic
-    lib/gravtastic/engine.rb
-    lib/gravtastic/version.rb
-    lib/gravtastic.rb
-    spec/gravtastic_spec.rb
-    spec/helper.rb
-    vendor/assets
-    vendor/assets/javascripts
-    vendor/assets/javascripts/gravtastic.coffee
-    vendor/assets/javascripts/md5.js
-  )
+  s.files        = %w(README.md Rakefile Gemfile) + Dir['{lib,spec,vendor}/**/*']
 end
