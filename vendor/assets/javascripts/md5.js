@@ -1,4 +1,4 @@
-(function(export) {
+(function(out) {
   /*
    * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message
    * Digest Algorithm, as defined in RFC 1321.
@@ -379,5 +379,5 @@
     return (num << cnt) | (num >>> (32 - cnt));
   }
 
-  export.MD5 = hex_md5;
+  out.MD5 = hex_md5;
 })(window);
