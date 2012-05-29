@@ -17,8 +17,8 @@ describe Gravtastic do
 
   describe 'default' do
 
-    it "options are {:rating => 'PG', :secure => false, :filetype => :png}" do
-      @g.gravatar_defaults.should == {:rating => 'PG', :secure => false, :filetype => :png}
+    it "options are {:rating => 'PG', :secure => true, :filetype => :png}" do
+      @g.gravatar_defaults.should == {:rating => 'PG', :secure => true, :filetype => :png}
     end
 
     it "source is :email" do
@@ -29,15 +29,26 @@ describe Gravtastic do
 
   describe "#gravatar_id" do
 
-    it "downcases email" do
+    it 'should delegate to Gravtastic.gravatar_id' do
       a = @g.new
-      stub(a).email do 'USER@EXAMPLE.COM' end
-      b = @g.new
-      stub(b).email do 'user@example.com' end
-      a.gravatar_id.should == b.gravatar_id
+      stub(a).email do 'user@example.com' end
+      mock(Gravtastic).gravatar_id('user@example.com') { 'email_hash' }
+      a.gravatar_id.should == 'email_hash'
+    end
+    
+  end
+  
+  describe "Gravtastic.gravatar_id" do
+
+    it "downcases email" do
+      Gravtastic.gravatar_id('USER@EXAMPLE.COM').should == Gravtastic.gravatar_id('user@example.com')
     end
 
-  end
+    it "hashes with MD5" do
+      Gravtastic.gravatar_id('user@example.com').should == 'b58996c504c5638798eb6b511e6f49af'
+    end
+
+  end  
 
   describe "#gravatar_url" do
 
@@ -47,28 +58,41 @@ describe Gravtastic do
     end
 
     it "makes a pretty URL" do
-      @user.gravatar_url.should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=PG'
+      @user.gravatar_url.should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=PG'
+    end
+
+    it "delegates to Gravtastic.gravatar_url" do
+      stub(@user.class).gravatar_defaults{ { :some => :default, :awesome => 'values' } }
+      mock(Gravtastic).gravatar_url('user@example.com', { :some => :default, :awesome => 'override', :extreme => true }){ 'http://magic.url' }
+      @user.gravatar_url(:extreme => true, :awesome => 'override').should == 'http://magic.url'
+    end
+
+  end
+  
+  describe "Gravtastic.gravatar_url" do
+
+    before(:each) do
+      stub(Gravtastic).gravatar_id('email'){ 'mailhash' }
     end
 
     it "makes a secure URL" do
-      @user.gravatar_url(:secure => true).should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=PG'
+      Gravtastic.gravatar_url('email', :rating => 'PG', :secure => true, :filetype => :png).should == 'https://secure.gravatar.com/avatar/mailhash.png?r=PG'
+    end
+
+    it "makes an unsecure URL" do
+      Gravtastic.gravatar_url('email', :rating => 'PG', :secure => false, :filetype => :png).should == 'http://gravatar.com/avatar/mailhash.png?r=PG'
     end
 
     it "makes a jpeggy URL" do
-      @user.gravatar_url(:filetype => :jpg).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.jpg?r=PG'
+      Gravtastic.gravatar_url('email', :rating => 'PG', :secure => true, :filetype => :jpg).should == 'https://secure.gravatar.com/avatar/mailhash.jpg?r=PG'
     end
 
     it "makes a saucy URL" do
-      @user.gravatar_url(:rating => 'R').should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R'
+      Gravtastic.gravatar_url('email', :rating => 'R', :secure => true, :filetype => :png).should == 'https://secure.gravatar.com/avatar/mailhash.png?r=R'
     end
 
     it "abides to some new fancy feature" do
-      @user.gravatar_url(:extreme => true).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?extreme=true&r=PG'
-    end
-
-    it "makes a URL from the defaults" do
-      stub(@user.class).gravatar_defaults{ {:size => 20, :rating => 'R18', :secure => true, :filetype => :png} }
-      @user.gravatar_url.should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R18&s=20'
+      Gravtastic.gravatar_url('email', :rating => 'PG', :secure => true, :filetype => :png, :extreme => true).should == 'https://secure.gravatar.com/avatar/mailhash.png?extreme=true&r=PG'
     end
 
   end
