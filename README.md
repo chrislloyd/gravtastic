@@ -68,7 +68,7 @@ The best way to do this is to set the `:default` option when using `#gravatr_url
     <th>Option</th>
     <th>Description</th>
     <th>Default</th>
-    <th>Values<th>
+    <th>Values</th>
   </tr>
   <tr>
     <td><b>secure</b></td>
@@ -99,7 +99,12 @@ The best way to do this is to set the `:default` option when using `#gravatr_url
     <td>The filetype of the image</td>
     <td>png</td>
     <td>gif, jpg or png</td>
-  </tr>
+  <tr>
+    <td><b>forcedefault</b></td>
+    <td>Force the default image to always load</td>
+    <td>false</td>
+    <td>true/false</td>
+  </tr>  </tr>
 </table>
 
 
