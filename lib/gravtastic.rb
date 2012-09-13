@@ -26,9 +26,10 @@ module Gravtastic
     options = args.last.is_a?(Hash) ? args.pop : {}
 
     model.gravatar_defaults = {
-      :rating =>   'PG',
-      :secure =>   true,
-      :filetype => :png
+      :rating =>       'PG',
+      :secure =>       true,
+      :filetype =>     :png,
+      :forcedefault => false
     }.merge(options)
 
     # The method where Gravtastic get the users' email from defaults to `#email`.
@@ -64,7 +65,8 @@ module Gravtastic
     def gravatar_abbreviations
       { :size => 's',
         :default => 'd',
-        :rating => 'r'
+        :rating => 'r',
+        :forcedefault => 'f'
       }
     end
   end
@@ -83,7 +85,7 @@ module Gravtastic
       options = self.class.gravatar_defaults.merge(options)
       gravatar_hostname(options.delete(:secure)) +
         gravatar_filename(options.delete(:filetype)) +
-        url_params_from_hash(options)
+        url_params_from_hash(process_options(options))
     end
 
   private
@@ -105,6 +107,22 @@ module Gravtastic
     # Munges the ID and the filetype into one. Like "abc123.png"
     def gravatar_filename(filetype)
       "#{gravatar_id}.#{filetype}"
+    end
+
+    # Some options need to be processed before becoming URL params
+    def process_options(options)
+      processed_options = {}
+      options.each do |key, val|
+        case key
+        when :forcedefault
+          if val
+            processed_options[key] = 'y'
+          end
+        else
+          processed_options[key] = val
+        end
+      end
+      processed_options
     end
   end
 

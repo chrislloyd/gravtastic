@@ -20,7 +20,12 @@ describe Gravtastic do
   describe 'default' do
 
     it "options are {:rating => 'PG', :secure => true, :filetype => :png}" do
-      @g.gravatar_defaults.should == {:rating => 'PG', :secure => true, :filetype => :png}
+      @g.gravatar_defaults.should == {
+        :rating => 'PG',
+        :secure => true,
+        :filetype => :png,
+        :forcedefault => false
+      }
     end
 
     it "source is :email" do
