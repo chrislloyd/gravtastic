@@ -69,6 +69,10 @@ describe Gravtastic do
       @user.gravatar_url(:secure => false, :rating => 'R').should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R'
     end
 
+    it "makes a forcedefault URL" do
+      @user.gravatar_url(:secure => false, :forcedefault => true).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?f=y&r=PG'
+    end
+
     it "abides to some new fancy feature" do
       @user.gravatar_url(:secure => false, :extreme => true).should == 'http://gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?extreme=true&r=PG'
     end
