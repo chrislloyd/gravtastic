@@ -24,7 +24,6 @@ describe Gravtastic do
         :rating => 'PG',
         :secure => true,
         :filetype => :png,
-        :forcedefault => false
       }
     end
 

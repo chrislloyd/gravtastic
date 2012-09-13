@@ -29,7 +29,6 @@ module Gravtastic
       :rating =>       'PG',
       :secure =>       true,
       :filetype =>     :png,
-      :forcedefault => false
     }.merge(options)
 
     # The method where Gravtastic get the users' email from defaults to `#email`.
