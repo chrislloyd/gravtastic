@@ -2,12 +2,25 @@
 
 # Private abbreviations
 abbreviations =
-  size:    's'
-  default: 'd'
-  rating:  'r'
+  size:         's'
+  default:      'd'
+  rating:       'r'
+  forcedefault: 'f'
 
 window.Gravtastic = (email, options={}) ->
   id = MD5(email.toString().toLowerCase())
+
+  process_options = (options) ->
+    processed_options = {}
+    for key, val of options
+      switch key
+        when "secure" then
+        when "filetype" then
+        when "forcedefault"
+          if val
+            processed_options[key] = 'y'
+        else processed_options[key] = val
+    processed_options
 
   # Initialize options
   opts = {}
@@ -22,7 +35,7 @@ window.Gravtastic = (email, options={}) ->
   path = "/#{id}.#{opts.filetype || 'png'}"
 
   params = "?" + (
-    for key, val of opts when key isnt "secure" and key isnt "filetype"
+    for key, val of process_options(opts)
       "#{abbreviations[key] || key}=#{val}"
   ).join('&')
 
