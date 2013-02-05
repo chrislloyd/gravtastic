@@ -16,6 +16,9 @@ require './lib/gravtastic/version'
 
   s.has_rdoc = false
 
+  s.add_development_dependency 'rspec', '~> 2.0.0'
+  s.add_development_dependency 'rr', '~> 1.0.0'
+
   s.require_path = 'lib'
   s.files        = %w(README.md Rakefile Gemfile) + Dir['{lib,spec,vendor}/**/*']
 end

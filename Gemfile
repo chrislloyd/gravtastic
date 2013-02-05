@@ -1,2 +1,3 @@
-gem 'rspec'
-gem 'rr'
+source 'https://rubygems.org'
+
+gemspec
