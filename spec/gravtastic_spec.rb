@@ -81,6 +81,14 @@ describe Gravtastic do
       @user.gravatar_url.should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?r=R18&s=20'
     end
 
+    it "makes a URL with the default option" do
+      @user.gravatar_url(:default => 'default.jpg').should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?d=default.jpg&r=PG'
+    end
+
+    it "makes a URL when the default option is a lambda" do
+      @user.gravatar_url(:default => lambda {|u| "#{u.email}.jpg"}).should == 'https://secure.gravatar.com/avatar/b58996c504c5638798eb6b511e6f49af.png?d=user@example.com.jpg&r=PG'
+    end
+
   end
 
 end

@@ -118,7 +118,7 @@ module Gravtastic
             processed_options[key] = 'y'
           end
         else
-          processed_options[key] = val
+          processed_options[key] = val.is_a?(Proc) ? val.call(self) : val
         end
       end
       processed_options
