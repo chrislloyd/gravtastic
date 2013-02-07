@@ -51,6 +51,13 @@ That will show R rated Gravatars over a secure connection. If you find yourself 
 
 Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px.
 
+If your Gravatar defaults depend on your instance, you can define them with a lambda:
+
+    class User < ActiveRecord::Base
+      include Gravtastic
+      # default avatar is the first letter of the user's first name
+      gravtastic :default => lambda { |u| "https://assets.example.com/#{u.first_name[0]}.png" }
+
 Gravatar needs an email address to find the person's avatar. By default, Gravtastic calls the `#email` method to find this. You can customise this.
 
     gravtastic :author_email
