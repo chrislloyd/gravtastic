@@ -43,7 +43,7 @@ Gravatar gives you some options. You can use them like this:
 
     <%= image_tag @user.gravatar_url(:rating => 'R', :secure => true) %>
 
-That will show R rated Gravatars over a secure connection. If you find yourself using the same options over and over again, you can set the Gravatar defaults. In your model, just change the `is_gravtastic` line to something like this:
+That will show R rated Gravatars over a secure connection. If you find yourself using the same options over and over again, you can set the Gravatar defaults. In your model, just change the `gravtastic` line to something like this:
 
     gravtastic :secure => true,
                   :filetype => :gif,
@@ -110,7 +110,7 @@ Gravatar is really just simple Ruby. There is no special magic which ties it to 
     require 'gravtastic'
     class MyClass
       include Gravtastic
-      is_gravtastic
+      gravtastic
     end
 
 For instance, with the excellent [MongoMapper](http://github.com/jnunemaker/mongomapper) you can use do this:
@@ -119,14 +119,14 @@ For instance, with the excellent [MongoMapper](http://github.com/jnunemaker/mong
       include MongoMapper::Document
       include Gravtastic
 
-      is_gravtastic
+      gravtastic
 
       key :email
     end
 
 And wallah! It's exactly the same as with ActiveRecord! Now all instances of the `Person` class will have `#gravatar_url` methods.
 
-_Note: the `#gravatar_url` methods don't get included until you specify the class `is_gravtastic!`_
+_Note: the `#gravatar_url` methods don't get included until you call the `gravtastic` method._
 
 
 ## Javascript
