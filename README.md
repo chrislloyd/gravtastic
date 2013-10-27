@@ -45,15 +45,17 @@ Gravatar gives you some options. You can use them like this:
 
 That will show R rated Gravatars over a secure connection. If you find yourself using the same options over and over again, you can set the Gravatar defaults. In your model, just change the `is_gravtastic` line to something like this:
 
-    gravtastic :secure => true,
-                  :filetype => :gif,
-                  :size => 120
+    gravtastic :secure => false,
+               :filetype => :gif,
+               :size => 120
 
 Now all your Gravatars will come from a secure connection, be a GIF and be 120x120px.
 
-Gravatar needs an email address to find the person's avatar. By default, Gravtastic calls the `#email` method to find this. You can customise this.
+Gravatar needs an email address to find the person's avatar. By default, Gravtastic calls the `#email` method to find this. You can explicitly choose it providing the additional first parameter:
 
-    gravtastic :author_email
+    gravtastic :author_email,
+               :size => 100,
+               :secure => false
 
 ### Defaults
 
@@ -68,7 +70,7 @@ The best way to do this is to set the `:default` option when using `#gravatar_ur
     <th>Option</th>
     <th>Description</th>
     <th>Default</th>
-    <th>Values<th>
+    <th>Values</th>
   </tr>
   <tr>
     <td><b>secure</b></td>
@@ -86,7 +88,7 @@ The best way to do this is to set the `:default` option when using `#gravatar_ur
     <td><b>default</b></td>
     <td>The default avatar image</td>
     <td><i>none</i></td>
-    <td>"identicon", "monsterid", "wavatar" or an absolute URL.</td>
+    <td>"404", "mm", "identicon", "monsterid", "wavatar", "retro" or an absolute URL.</td>
   </tr>
   <tr>
     <td><b>rating</b></td>
@@ -99,9 +101,15 @@ The best way to do this is to set the `:default` option when using `#gravatar_ur
     <td>The filetype of the image</td>
     <td>png</td>
     <td>gif, jpg or png</td>
-  </tr>
+  <tr>
+    <td><b>forcedefault</b></td>
+    <td>Force the default image to always load</td>
+    <td>false</td>
+    <td>true/false</td>
+  </tr>  </tr>
 </table>
 
+Gravtastic also adds in URL any other options without changing them.
 
 ### Other ORMs
 
