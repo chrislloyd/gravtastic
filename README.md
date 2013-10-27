@@ -91,7 +91,7 @@ The best way to do this is to set the `:default` option when using `#gravatr_url
   <tr>
     <td><b>rating</b></td>
     <td>The highest level of ratings you want to allow</td>
-    <td>G</td>
+    <td>PG</td>
     <td>G, PG, R or X</td>
   </tr>
   <tr>
