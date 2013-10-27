@@ -59,7 +59,7 @@ Gravatar needs an email address to find the person's avatar. By default, Gravtas
 
 A common question is "how do I detect wether the user has an avatar or not?" People usually write code to perform a HTTP request to Gravatar to see wether the gravatar exists. This is certainly a solution, but not a very good one. If you have page where you show 50 users, the client will have to wait for 50 HTTP requests before they even get the page. Slooww.
 
-The best way to do this is to set the `:default` option when using `#gravatr_url`. If the user doesn't have an avatar, Gravatar essentially redirects to the "default" url you provide.
+The best way to do this is to set the `:default` option when using `#gravatar_url`. If the user doesn't have an avatar, Gravatar essentially redirects to the "default" url you provide.
 
 ### Complete List of Options
 
