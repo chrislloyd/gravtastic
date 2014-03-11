@@ -33,7 +33,7 @@ Next, in your model:
       gravtastic
     end
 
-<small>_Note: You can use either `is_gravtastic!`, `is_gravtastic` or `has_gravatar`, they all do the same thing._</small>
+*Note: You can use either `is_gravtastic!`, `is_gravtastic` or `has_gravatar`, they all do the same thing.*
 
 And you are done! In your views you can now use the `#gravatar_url` method on instances of `User`:
 
