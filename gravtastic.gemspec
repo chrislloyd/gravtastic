@@ -8,6 +8,7 @@ require './lib/gravtastic/version'
   s.author   = 'Chris Lloyd'
   s.email    = 'christopher.lloyd@gmail.com'
   s.homepage = 'http://github.com/chrislloyd/gravtastic'
+  s.license  = 'MIT'
 
   s.summary     = 'A Ruby wrapper for Gravatar URLs'
   s.description = s.summary
