@@ -86,7 +86,7 @@ The best way to do this is to set the `:default` option when using `#gravatar_ur
     <td><b>default</b></td>
     <td>The default avatar image</td>
     <td><i>none</i></td>
-    <td>"identicon", "monsterid", "wavatar" or an absolute URL.</td>
+    <td>"404, "mm", "identicon", "monsterid", "wavatar", "retro", "blank" or an absolute URL.</td>
   </tr>
   <tr>
     <td><b>rating</b></td>
